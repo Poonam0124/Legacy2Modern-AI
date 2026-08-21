@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1b9af8c6b11445c39b19590a62486b37" Name="Diagram1">
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.AuditLog" Width="1.5" PointX="5.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.Customer" Width="1.5" PointX="0.75" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.CustomerContact" Width="1.5" PointX="3" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.CustomerProduct" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.Employee" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.Product" Width="1.5" PointX="1.5" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.ServiceRequest" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.ServiceRequestComment" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Legacy2ModernDBModel.ServiceRequestHistory" Width="1.5" PointX="8.25" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_CustomerContact_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_CustomerProduct_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequest_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_CustomerProduct_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequest_CustomerProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequest_AssignedEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequest_CreatedByEmployee" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequestComment_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequestHistory_Employee" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequestComment_Request" ManuallyRouted="false" />
+        <AssociationConnector Association="Legacy2ModernDBModel.FK_ServiceRequestHistory_Request" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
