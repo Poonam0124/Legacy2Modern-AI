@@ -125,9 +125,11 @@
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
+    <Content Include="Customers\CustomerContactEdit.aspx" />
     <Content Include="Customers\CustomerDetails.aspx" />
     <Content Include="Customers\CustomerEdit.aspx" />
     <Content Include="Customers\CustomerList.aspx" />
+    <Content Include="Customers\CustomerProductEdit.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -209,6 +211,13 @@
     <Compile Include="Contact.aspx.designer.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Customers\CustomerContactEdit.aspx.cs">
+      <DependentUpon>CustomerContactEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Customers\CustomerContactEdit.aspx.designer.cs">
+      <DependentUpon>CustomerContactEdit.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Customers\CustomerDetails.aspx.cs">
       <DependentUpon>CustomerDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -229,6 +238,13 @@
     </Compile>
     <Compile Include="Customers\CustomerList.aspx.designer.cs">
       <DependentUpon>CustomerList.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Customers\CustomerProductEdit.aspx.cs">
+      <DependentUpon>CustomerProductEdit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Customers\CustomerProductEdit.aspx.designer.cs">
+      <DependentUpon>CustomerProductEdit.aspx</DependentUpon>
     </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>

@@ -88,7 +88,10 @@
       <DependentUpon>Legacy2ModernModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\CustomerContactRepository.cs" />
+    <Compile Include="Repositories\CustomerProductRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
+    <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="ServiceRequest.cs">
       <DependentUpon>Legacy2ModernModel.tt</DependentUpon>
     </Compile>

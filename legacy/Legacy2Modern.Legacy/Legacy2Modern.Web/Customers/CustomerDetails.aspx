@@ -122,5 +122,125 @@
         </asp:HyperLink>
 
     </div>
+    <hr />
+
+    <h3>Contacts</h3>
+
+    <asp:Label
+        ID="lblContactMessage"
+        runat="server"
+        CssClass="text-danger" />
+
+    <br />
+
+    <asp:HyperLink
+        ID="lnkAddContact"
+        runat="server"
+        CssClass="btn btn-primary"
+        Text="Add Contact" />
+
+    <br />
+    <br />
+
+    <asp:GridView
+        ID="gvContacts"
+        runat="server"
+        AutoGenerateColumns="False"
+        CssClass="table table-bordered table-striped">
+
+        <Columns>
+
+            <asp:BoundField
+                DataField="ContactType"
+                HeaderText="Type" />
+
+            <asp:BoundField
+                DataField="ContactValue"
+                HeaderText="Contact" />
+
+            <asp:CheckBoxField
+                DataField="IsPrimary"
+                HeaderText="Primary" />
+
+            <asp:BoundField
+                DataField="CreatedDate"
+                HeaderText="Created"
+                DataFormatString="{0:dd-MMM-yyyy}" />
+
+            <asp:HyperLinkField
+                Text="Edit"
+                HeaderText="Action"
+                DataNavigateUrlFields="CustomerContactId"
+                DataNavigateUrlFormatString="CustomerContactEdit.aspx?id={0}"
+                ControlStyle-CssClass="btn btn-sm btn-warning" />
+
+        </Columns>
+
+    </asp:GridView>
+
+    <hr />
+
+<h3>Products</h3>
+
+<asp:Label
+    ID="lblProductMessage"
+    runat="server"
+    CssClass="text-danger" />
+
+<br />
+
+<asp:HyperLink
+    ID="lnkAddProduct"
+    runat="server"
+    CssClass="btn btn-primary"
+    Text="Add Product" />
+
+<br />
+<br />
+
+<asp:GridView
+    ID="gvProducts"
+    runat="server"
+    AutoGenerateColumns="False"
+    CssClass="table table-bordered table-striped">
+
+    <Columns>
+
+        <asp:BoundField
+            DataField="Product.ProductCode"
+            HeaderText="Product Code" />
+
+        <asp:BoundField
+            DataField="Product.ProductName"
+            HeaderText="Product" />
+
+        <asp:BoundField
+            DataField="SubscriptionNumber"
+            HeaderText="Subscription" />
+
+        <asp:BoundField
+            DataField="StartDate"
+            HeaderText="Start Date"
+            DataFormatString="{0:dd-MMM-yyyy}" />
+
+        <asp:BoundField
+            DataField="EndDate"
+            HeaderText="End Date"
+            DataFormatString="{0:dd-MMM-yyyy}" />
+
+        <asp:BoundField
+            DataField="Status"
+            HeaderText="Status" />
+
+        <asp:HyperLinkField
+            Text="Edit"
+            HeaderText="Action"
+            DataNavigateUrlFields="CustomerProductId"
+            DataNavigateUrlFormatString="CustomerProductEdit.aspx?id={0}"
+            ControlStyle-CssClass="btn btn-sm btn-warning" />
+
+    </Columns>
+
+</asp:GridView>
 
 </asp:Content>
