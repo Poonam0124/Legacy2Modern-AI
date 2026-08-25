@@ -12,8 +12,7 @@
 
     <div class="container">
 
-        <h2>
-            Service Request Details
+        <h2>Service Request Details
         </h2>
 
         <hr />
@@ -90,9 +89,34 @@
                         <tr>
                             <th>Assigned To</th>
                             <td>
+
                                 <asp:Label
                                     ID="lblAssignedTo"
                                     runat="server" />
+
+                                <br />
+
+                                <asp:DropDownList
+                                    ID="ddlAssignedTo"
+                                    runat="server"
+                                    CssClass="form-control"
+                                    Style="margin-top: 8px;">
+                                </asp:DropDownList>
+
+                                <br />
+
+                                <asp:Button
+                                    ID="btnAssignEmployee"
+                                    runat="server"
+                                    Text="Save Assignment"
+                                    CssClass="btn btn-primary"
+                                    OnClick="btnAssignEmployee_Click" />
+
+                                <asp:Label
+                                    ID="lblAssignmentMessage"
+                                    runat="server"
+                                    CssClass="text-success" />
+
                             </td>
                         </tr>
 
@@ -159,8 +183,7 @@
 
             <a
                 href="ServiceRequestList.aspx"
-                class="btn btn-default">
-                Back to Requests
+                class="btn btn-default">Back to Requests
             </a>
 
         </asp:Panel>

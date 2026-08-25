@@ -105,5 +105,26 @@ namespace Legacy2Modern.Business.Services
             return "SR-" +
                    DateTime.Now.ToString("yyyyMMddHHmmssfff");
         }
+
+        public void AssignEmployee( int serviceRequestId,  int? employeeId)
+        {
+            if (serviceRequestId <= 0)
+            {
+                throw new ArgumentException(
+                    "Invalid service request.");
+            }
+
+            if (employeeId.HasValue &&
+                employeeId.Value <= 0)
+            {
+                throw new ArgumentException(
+                    "Invalid employee.");
+            }
+
+            _serviceRequestRepository
+                .AssignEmployee(
+                    serviceRequestId,
+                    employeeId);
+        }
     }
 }

@@ -19,6 +19,7 @@ namespace Legacy2Modern.Web.ServiceRequests
 
             if (!IsPostBack)
             {
+                LoadEmployees();
                 LoadServiceRequest();
             }
         }
@@ -151,11 +152,21 @@ namespace Legacy2Modern.Web.ServiceRequests
                     + request.Employee.FirstName
                     + " "
                     + request.Employee.LastName;
+
+                if (ddlAssignedTo.Items.FindByValue(
+                    request.Employee.EmployeeId.ToString())
+                    != null)
+                {
+                    ddlAssignedTo.SelectedValue =
+                        request.Employee.EmployeeId.ToString();
+                }
             }
             else
             {
                 lblAssignedTo.Text =
                     "Unassigned";
+
+                ddlAssignedTo.SelectedIndex = 0;
             }
         }
 
@@ -163,6 +174,80 @@ namespace Legacy2Modern.Web.ServiceRequests
         {
             pnlDetails.Visible = false;
             lblMessage.Text = message;
+        }
+
+        private void LoadEmployees()
+        {
+            var employees =
+                _serviceRequestService
+                    .GetActiveEmployees();
+
+            ddlAssignedTo.DataSource =
+                employees;
+
+            ddlAssignedTo.DataTextField =
+                "FirstName";
+
+            ddlAssignedTo.DataValueField =
+                "EmployeeId";
+
+            ddlAssignedTo.DataBind();
+
+            ddlAssignedTo.Items.Insert(
+                0,
+                new System.Web.UI.WebControls.ListItem(
+                    "-- Unassigned --",
+                    ""));
+        }
+
+        protected void btnAssignEmployee_Click(
+    object sender,
+    EventArgs e)
+        {
+            try
+            {
+                lblAssignmentMessage.Text = "";
+
+                int serviceRequestId;
+
+                if (!int.TryParse(
+                    Request.QueryString["id"],
+                    out serviceRequestId))
+                {
+                    lblAssignmentMessage.Text =
+                        "Invalid service request.";
+
+                    return;
+                }
+
+                int? employeeId = null;
+
+                if (!string.IsNullOrWhiteSpace(
+                    ddlAssignedTo.SelectedValue))
+                {
+                    employeeId =
+                        Convert.ToInt32(
+                            ddlAssignedTo.SelectedValue);
+                }
+
+                _serviceRequestService
+                    .AssignEmployee(
+                        serviceRequestId,
+                        employeeId);
+
+                lblAssignmentMessage.Text =
+                    "Assignment saved successfully.";
+
+                LoadServiceRequest();
+            }
+            catch (Exception ex)
+            {
+                lblAssignmentMessage.Text =
+                    "Unable to save assignment.";
+
+                System.Diagnostics.Debug
+                    .WriteLine(ex.ToString());
+            }
         }
     }
 }

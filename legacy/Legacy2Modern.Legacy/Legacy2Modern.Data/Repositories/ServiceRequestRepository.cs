@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
@@ -127,6 +128,32 @@ namespace Legacy2Modern.Data.Repositories
                 context.SaveChanges();
 
                 return serviceRequest.ServiceRequestId;
+            }
+        }
+
+        public void AssignEmployee(int serviceRequestId, int? employeeId)
+        {
+            using (var context = new Legacy2ModernDBEntities())
+            {
+                var request =
+                    context.ServiceRequests
+                        .FirstOrDefault(x =>
+                            x.ServiceRequestId ==
+                            serviceRequestId);
+
+                if (request == null)
+                {
+                    throw new InvalidOperationException(
+                        "Service request not found.");
+                }
+
+                request.AssignedToEmployeeId =
+                    employeeId;
+
+                request.ModifiedDate =
+                    DateTime.Now;
+
+                context.SaveChanges();
             }
         }
     }
