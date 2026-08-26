@@ -80,9 +80,51 @@
                         <tr>
                             <th>Status</th>
                             <td>
+
                                 <asp:Label
                                     ID="lblStatus"
                                     runat="server" />
+
+                                <br />
+                                <br />
+
+                                <label>Change Status</label>
+
+                                <asp:DropDownList
+                                    ID="ddlStatus"
+                                    runat="server"
+                                    CssClass="form-control"
+                                    Style="max-width: 350px;">
+                                </asp:DropDownList>
+
+                                <br />
+
+                                <label>Change Reason</label>
+
+                                <asp:TextBox
+                                    ID="txtChangeReason"
+                                    runat="server"
+                                    CssClass="form-control"
+                                    TextMode="MultiLine"
+                                    Rows="3"
+                                    MaxLength="500"
+                                    Style="max-width: 500px;" />
+
+                                <br />
+
+                                <asp:Button
+                                    ID="btnChangeStatus"
+                                    runat="server"
+                                    Text="Change Status"
+                                    CssClass="btn btn-primary"
+                                    OnClick="btnChangeStatus_Click" />
+
+                                &nbsp;
+
+                            <asp:Label
+                                ID="lblStatusMessage"
+                                runat="server" />
+
                             </td>
                         </tr>
 

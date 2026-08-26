@@ -156,5 +156,81 @@ namespace Legacy2Modern.Data.Repositories
                 context.SaveChanges();
             }
         }
+
+        public void ChangeStatus(
+    int serviceRequestId,
+    string newStatus,
+    int? changedByEmployeeId,
+    string oldStatus,
+    string changeReason)
+        {
+            using (var context = new Legacy2ModernDBEntities())
+            using (var transaction = context.Database.BeginTransaction())
+            {
+                try
+                {
+                    var request =
+                        context.ServiceRequests
+                            .FirstOrDefault(x =>
+                                x.ServiceRequestId ==
+                                serviceRequestId);
+
+                    if (request == null)
+                    {
+                        throw new InvalidOperationException(
+                            "Service request not found.");
+                    }
+
+                    request.Status = newStatus;
+                    request.ModifiedDate = DateTime.Now;
+
+                    if (string.Equals(
+                        newStatus,
+                        "Closed",
+                        StringComparison.OrdinalIgnoreCase))
+                    {
+                        request.ClosedDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        request.ClosedDate = null;
+                    }
+
+                    var history =
+                        new ServiceRequestHistory
+                        {
+                            ServiceRequestId =
+                                serviceRequestId,
+
+                            ChangedByEmployeeId =
+                                changedByEmployeeId,
+
+                            OldStatus =
+                                oldStatus,
+
+                            NewStatus =
+                                newStatus,
+
+                            ChangeReason =
+                                changeReason,
+
+                            ChangedDate =
+                                DateTime.Now
+                        };
+
+                    context.ServiceRequestHistories
+                        .Add(history);
+
+                    context.SaveChanges();
+
+                    transaction.Commit();
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }
+        }
     }
 }

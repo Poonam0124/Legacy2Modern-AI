@@ -7,6 +7,21 @@ namespace Legacy2Modern.Web.ServiceRequests
     public partial class ServiceRequestDetails
         : System.Web.UI.Page
     {
+        private const string StatusOpen =
+    "Open";
+
+        private const string StatusAssigned =
+            "Assigned";
+
+        private const string StatusInProgress =
+            "In Progress";
+
+        private const string StatusResolved =
+            "Resolved";
+
+        private const string StatusClosed =
+            "Closed";
+
         private ServiceRequestService
             _serviceRequestService;
 
@@ -79,6 +94,9 @@ namespace Legacy2Modern.Web.ServiceRequests
 
             lblStatus.Text =
                 request.Status;
+
+            LoadAvailableStatuses(
+    request.Status);
 
             lblSubject.Text =
                 request.Subject;
@@ -244,6 +262,156 @@ namespace Legacy2Modern.Web.ServiceRequests
             {
                 lblAssignmentMessage.Text =
                     "Unable to save assignment.";
+
+                System.Diagnostics.Debug
+                    .WriteLine(ex.ToString());
+            }
+        }
+
+        private void LoadAvailableStatuses(
+    string currentStatus)
+        {
+            ddlStatus.Items.Clear();
+
+            switch (currentStatus)
+            {
+                case StatusOpen:
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            StatusAssigned,
+                            StatusAssigned));
+
+                    break;
+
+                case StatusAssigned:
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            StatusOpen,
+                            StatusOpen));
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            StatusInProgress,
+                            StatusInProgress));
+
+                    break;
+
+                case StatusInProgress:
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            StatusAssigned,
+                            StatusAssigned));
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            StatusResolved,
+                            StatusResolved));
+
+                    break;
+
+                case StatusResolved:
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            StatusInProgress,
+                            StatusInProgress));
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            StatusClosed,
+                            StatusClosed));
+
+                    break;
+
+                case StatusClosed:
+
+                    ddlStatus.Items.Add(
+                        new System.Web.UI.WebControls.ListItem(
+                            "No further transitions",
+                            ""));
+
+                    btnChangeStatus.Enabled = false;
+
+                    break;
+            }
+        }
+
+        protected void btnChangeStatus_Click(
+    object sender,
+    EventArgs e)
+        {
+            try
+            {
+                lblStatusMessage.Text = "";
+                lblStatusMessage.CssClass =
+                    "text-success";
+
+                int serviceRequestId;
+
+                if (!int.TryParse(
+                    Request.QueryString["id"],
+                    out serviceRequestId))
+                {
+                    lblStatusMessage.Text =
+                        "Invalid service request.";
+
+                    lblStatusMessage.CssClass =
+                        "text-danger";
+
+                    return;
+                }
+
+                if (string.IsNullOrWhiteSpace(
+                    ddlStatus.SelectedValue))
+                {
+                    lblStatusMessage.Text =
+                        "No valid status transition is available.";
+
+                    lblStatusMessage.CssClass =
+                        "text-danger";
+
+                    return;
+                }
+
+                string changeReason =
+                    txtChangeReason.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(
+                    changeReason))
+                {
+                    lblStatusMessage.Text =
+                        "Please enter a change reason.";
+
+                    lblStatusMessage.CssClass =
+                        "text-danger";
+
+                    return;
+                }
+
+                _serviceRequestService
+                    .ChangeStatus(
+                        serviceRequestId,
+                        ddlStatus.SelectedValue,
+                        null,
+                        changeReason);
+
+                lblStatusMessage.Text =
+                    "Status changed successfully.";
+
+                txtChangeReason.Text = "";
+
+                LoadServiceRequest();
+            }
+            catch (Exception ex)
+            {
+                lblStatusMessage.Text =
+                    ex.Message;
+
+                lblStatusMessage.CssClass =
+                    "text-danger";
 
                 System.Diagnostics.Debug
                     .WriteLine(ex.ToString());
