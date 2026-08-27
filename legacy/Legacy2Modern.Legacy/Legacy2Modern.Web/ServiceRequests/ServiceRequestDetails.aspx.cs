@@ -71,7 +71,9 @@ namespace Legacy2Modern.Web.ServiceRequests
                 }
 
                 DisplayRequest(request);
+
                 LoadComments(serviceRequestId);
+
                 LoadStatusHistory(serviceRequestId);
             }
             catch (Exception ex)
@@ -92,9 +94,7 @@ namespace Legacy2Modern.Web.ServiceRequests
                     _serviceRequestService
                         .GetComments(serviceRequestId);
 
-                rptComments.DataSource =
-                    comments;
-
+                rptComments.DataSource = comments;
                 rptComments.DataBind();
             }
             catch (Exception ex)
@@ -106,9 +106,12 @@ namespace Legacy2Modern.Web.ServiceRequests
                     "text-danger";
 
                 System.Diagnostics.Debug
-                    .WriteLine(ex.ToString());
+                    .WriteLine(
+                        "LoadComments failed: " +
+                        ex);
             }
         }
+
         protected string GetEmployeeName(
     object employeeObject)
         {
@@ -583,7 +586,7 @@ namespace Legacy2Modern.Web.ServiceRequests
         }
 
         private void LoadStatusHistory(
-    int serviceRequestId)
+        int serviceRequestId)
         {
             try
             {
@@ -592,15 +595,15 @@ namespace Legacy2Modern.Web.ServiceRequests
                         .GetStatusHistory(
                             serviceRequestId);
 
-                rptHistory.DataSource =
-                    history;
-
+                rptHistory.DataSource = history;
                 rptHistory.DataBind();
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug
-                    .WriteLine(ex.ToString());
+                    .WriteLine(
+                        "LoadStatusHistory failed: " +
+                        ex);
             }
         }
 

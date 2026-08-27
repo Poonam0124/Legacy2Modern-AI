@@ -2,6 +2,7 @@
 using Legacy2Modern.Data.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Legacy2Modern.Business.Services
 {
@@ -125,7 +126,9 @@ namespace Legacy2Modern.Business.Services
                    DateTime.Now.ToString("yyyyMMddHHmmssfff");
         }
 
-        public void AssignEmployee(int serviceRequestId, int? employeeId)
+        public void AssignEmployee(
+     int serviceRequestId,
+     int? employeeId)
         {
             if (serviceRequestId <= 0)
             {
@@ -138,6 +141,24 @@ namespace Legacy2Modern.Business.Services
             {
                 throw new ArgumentException(
                     "Invalid employee.");
+            }
+
+            if (employeeId.HasValue)
+            {
+                var employees =
+                    _serviceRequestRepository
+                        .GetActiveEmployees();
+
+                var employeeExists =
+                    employees.Any(x =>
+                        x.EmployeeId ==
+                        employeeId.Value);
+
+                if (!employeeExists)
+                {
+                    throw new InvalidOperationException(
+                        "Selected employee is not active.");
+                }
             }
 
             _serviceRequestRepository
@@ -163,6 +184,7 @@ namespace Legacy2Modern.Business.Services
                 throw new ArgumentException(
                     "Status is required.");
             }
+            newStatus = newStatus.Trim();
 
             var request =
                 GetById(serviceRequestId);
@@ -184,7 +206,19 @@ namespace Legacy2Modern.Business.Services
                 throw new InvalidOperationException(
                     "Service request is already in this status.");
             }
+            if (string.IsNullOrWhiteSpace(changeReason))
+            {
+                throw new ArgumentException(
+                    "Change reason is required.");
+            }
 
+            changeReason = changeReason.Trim();
+
+            if (changeReason.Length > 1000)
+            {
+                throw new ArgumentException(
+                    "Change reason cannot exceed 1000 characters.");
+            }
             ValidateStatusTransition(
                 currentStatus,
                 newStatus);
@@ -207,25 +241,25 @@ namespace Legacy2Modern.Business.Services
             {
                 case StatusOpen:
                     isValid =
-                        newStatus == StatusAssigned;
+                       string.Equals(
+                           newStatus,
+                           StatusAssigned,
+                           StringComparison.OrdinalIgnoreCase);
                     break;
 
                 case StatusAssigned:
-                    isValid =
-                        newStatus == StatusOpen ||
-                        newStatus == StatusInProgress;
+                    isValid = string.Equals(newStatus, StatusInProgress, StringComparison.OrdinalIgnoreCase) ||
+                              string.Equals(newStatus, StatusOpen, StringComparison.OrdinalIgnoreCase);
                     break;
 
                 case StatusInProgress:
-                    isValid =
-                        newStatus == StatusAssigned ||
-                        newStatus == StatusResolved;
+                    isValid = string.Equals(newStatus, StatusResolved, StringComparison.OrdinalIgnoreCase) ||
+                              string.Equals(newStatus, StatusAssigned, StringComparison.OrdinalIgnoreCase);
                     break;
 
                 case StatusResolved:
-                    isValid =
-                        newStatus == StatusInProgress ||
-                        newStatus == StatusClosed;
+                    isValid = string.Equals(newStatus, StatusClosed, StringComparison.OrdinalIgnoreCase) ||
+                              string.Equals(newStatus, StatusInProgress, StringComparison.OrdinalIgnoreCase);
                     break;
 
                 case StatusClosed:
