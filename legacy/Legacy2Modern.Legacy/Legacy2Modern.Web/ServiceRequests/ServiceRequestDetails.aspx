@@ -314,6 +314,60 @@
         <asp:Label
             ID="lblCommentMessage"
             runat="server" />
+
+        <hr />
+
+        <h3>Status History</h3>
+
+        <asp:Repeater
+            ID="rptHistory"
+            runat="server">
+
+            <ItemTemplate>
+
+                <div style="margin-bottom: 15px; padding: 15px; border-left: 4px solid #337ab7; background-color: #f8f8f8;">
+
+                    <div>
+                        <strong>
+                            <%# Eval(
+                        "OldStatus") %>
+                    →
+                    <%# Eval(
+                        "NewStatus") %>
+                        </strong>
+                    </div>
+
+                    <div style="color: #777; margin-top: 5px;">
+
+                        <%# Eval(
+                    "ChangedDate",
+                    "{0:dd-MMM-yyyy HH:mm}") %>
+                    </div>
+
+                    <div style="margin-top: 5px;">
+                        Changed by:
+                <strong>
+                    <%# GetHistoryEmployeeName(
+                        Eval("Employee")) %>
+                </strong>
+
+                    </div>
+
+                    <div style="margin-top: 5px;">
+                        Reason:
+                <%# Server.HtmlEncode(
+                    Eval("ChangeReason")
+                    == null
+                        ? ""
+                        : Eval("ChangeReason")
+                            .ToString()) %>
+                    </div>
+
+                </div>
+
+            </ItemTemplate>
+
+        </asp:Repeater>
     </div>
 
 </asp:Content>

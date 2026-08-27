@@ -72,6 +72,7 @@ namespace Legacy2Modern.Web.ServiceRequests
 
                 DisplayRequest(request);
                 LoadComments(serviceRequestId);
+                LoadStatusHistory(serviceRequestId);
             }
             catch (Exception ex)
             {
@@ -579,6 +580,46 @@ namespace Legacy2Modern.Web.ServiceRequests
                 "EmployeeId";
 
             ddlCommentEmployee.DataBind();
+        }
+
+        private void LoadStatusHistory(
+    int serviceRequestId)
+        {
+            try
+            {
+                var history =
+                    _serviceRequestService
+                        .GetStatusHistory(
+                            serviceRequestId);
+
+                rptHistory.DataSource =
+                    history;
+
+                rptHistory.DataBind();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug
+                    .WriteLine(ex.ToString());
+            }
+        }
+
+        protected string GetHistoryEmployeeName(
+    object employeeObject)
+        {
+            var employee =
+                employeeObject as Employee;
+
+            if (employee == null)
+            {
+                return "System / Unknown";
+            }
+
+            return string.Format(
+                "{0} {1}",
+                employee.FirstName,
+                employee.LastName)
+                .Trim();
         }
     }
 }

@@ -232,5 +232,21 @@ namespace Legacy2Modern.Data.Repositories
                 }
             }
         }
+
+        public List<ServiceRequestHistory> GetStatusHistory(
+    int serviceRequestId)
+        {
+            using (var context =
+                new Legacy2ModernDBEntities())
+            {
+                return context.ServiceRequestHistories
+                    .Include("Employee")
+                    .Where(x =>
+                        x.ServiceRequestId ==
+                        serviceRequestId)
+                    .OrderByDescending(x => x.ChangedDate)
+                    .ToList();
+            }
+        }
     }
 }

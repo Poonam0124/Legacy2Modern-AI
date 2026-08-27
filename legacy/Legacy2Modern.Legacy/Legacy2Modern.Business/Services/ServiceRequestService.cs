@@ -293,5 +293,27 @@ namespace Legacy2Modern.Business.Services
                 employeeId,
                 commentText.Trim());
         }
+
+        public List<ServiceRequestHistory>
+    GetStatusHistory(int serviceRequestId)
+        {
+            if (serviceRequestId <= 0)
+            {
+                throw new ArgumentException(
+                    "Invalid service request.");
+            }
+
+            var request =
+                GetById(serviceRequestId);
+
+            if (request == null)
+            {
+                throw new InvalidOperationException(
+                    "Service request not found.");
+            }
+
+            return _serviceRequestRepository
+                .GetStatusHistory(serviceRequestId);
+        }
     }
 }
