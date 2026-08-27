@@ -230,6 +230,90 @@
 
         </asp:Panel>
 
+        <hr />
+
+        <h3>Comments</h3>
+
+        <asp:Repeater
+            ID="rptComments"
+            runat="server">
+
+            <ItemTemplate>
+
+                <div style="margin-bottom: 20px; padding: 12px; border: 1px solid #ddd; border-radius: 4px;">
+
+                    <strong>
+                        <%# GetEmployeeName(
+                    Eval("Employee")) %>
+                    </strong>
+
+                    <span style="color: #777;">-
+                <%# Eval(
+                    "CreatedDate",
+                    "{0:dd-MMM-yyyy HH:mm}") %>
+                    </span>
+
+                    <br />
+
+                    <div style="margin-top: 8px;">
+                        <%# Server.HtmlEncode(
+                    Eval("CommentText").ToString()) %>
+                    </div>
+
+                </div>
+
+            </ItemTemplate>
+
+            <FooterTemplate>
+
+                <asp:Label
+                    ID="lblNoComments"
+                    runat="server"
+                    Text="No comments yet."
+                    Visible="false" />
+
+            </FooterTemplate>
+
+        </asp:Repeater>
+
+        <hr />
+
+        <h4>Add Comment</h4>
+
+        <label>Comment As</label>
+
+        <asp:DropDownList
+            ID="ddlCommentEmployee"
+            runat="server"
+            CssClass="form-control"
+            Style="max-width: 350px;">
+        </asp:DropDownList>
+
+        <br />
+
+        <asp:TextBox
+            ID="txtComment"
+            runat="server"
+            CssClass="form-control"
+            TextMode="MultiLine"
+            Rows="4"
+            MaxLength="5000"
+            Style="max-width: 700px;" />
+
+        <br />
+
+        <asp:Button
+            ID="btnAddComment"
+            runat="server"
+            Text="Add Comment"
+            CssClass="btn btn-primary"
+            OnClick="btnAddComment_Click" />
+
+        &nbsp;
+
+        <asp:Label
+            ID="lblCommentMessage"
+            runat="server" />
     </div>
 
 </asp:Content>

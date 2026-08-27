@@ -1,6 +1,7 @@
-﻿using System;
-using Legacy2Modern.Business.Services;
+﻿using Legacy2Modern.Business.Services;
 using Legacy2Modern.Data;
+using System;
+using System.Linq;
 
 namespace Legacy2Modern.Web.ServiceRequests
 {
@@ -36,6 +37,7 @@ namespace Legacy2Modern.Web.ServiceRequests
             {
                 LoadEmployees();
                 LoadServiceRequest();
+                LoadCommentEmployees();
             }
         }
 
@@ -69,6 +71,7 @@ namespace Legacy2Modern.Web.ServiceRequests
                 }
 
                 DisplayRequest(request);
+                LoadComments(serviceRequestId);
             }
             catch (Exception ex)
             {
@@ -80,6 +83,138 @@ namespace Legacy2Modern.Web.ServiceRequests
             }
         }
 
+        private void LoadComments(int serviceRequestId)
+        {
+            try
+            {
+                var comments =
+                    _serviceRequestService
+                        .GetComments(serviceRequestId);
+
+                rptComments.DataSource =
+                    comments;
+
+                rptComments.DataBind();
+            }
+            catch (Exception ex)
+            {
+                lblCommentMessage.Text =
+                    "Unable to load comments.";
+
+                lblCommentMessage.CssClass =
+                    "text-danger";
+
+                System.Diagnostics.Debug
+                    .WriteLine(ex.ToString());
+            }
+        }
+        protected string GetEmployeeName(
+    object employeeObject)
+        {
+            var employee =
+                employeeObject as Employee;
+
+            if (employee == null)
+            {
+                return "Unknown Employee";
+            }
+
+            return string.Format(
+                "{0} {1}",
+                employee.FirstName,
+                employee.LastName)
+                .Trim();
+        }
+        protected void btnAddComment_Click(
+    object sender,
+    EventArgs e)
+        {
+            try
+            {
+                lblCommentMessage.Text = "";
+                lblCommentMessage.CssClass =
+                    "text-success";
+
+                int serviceRequestId;
+
+                if (!int.TryParse(
+                    Request.QueryString["id"],
+                    out serviceRequestId))
+                {
+                    lblCommentMessage.Text =
+                        "Invalid service request.";
+
+                    lblCommentMessage.CssClass =
+                        "text-danger";
+
+                    return;
+                }
+
+                string commentText =
+                    txtComment.Text.Trim();
+
+                if (string.IsNullOrWhiteSpace(
+                    commentText))
+                {
+                    lblCommentMessage.Text =
+                        "Please enter a comment.";
+
+                    lblCommentMessage.CssClass =
+                        "text-danger";
+
+                    return;
+                }
+
+                if (commentText.Length > 5000)
+                {
+                    lblCommentMessage.Text =
+                        "Comment cannot exceed 5000 characters.";
+
+                    lblCommentMessage.CssClass =
+                        "text-danger";
+
+                    return;
+                }
+
+                int employeeId;
+
+                if (!int.TryParse(
+                    ddlCommentEmployee.SelectedValue,
+                    out employeeId))
+                {
+                    lblCommentMessage.Text =
+                        "Please select an employee.";
+
+                    lblCommentMessage.CssClass =
+                        "text-danger";
+
+                    return;
+                }
+
+                _serviceRequestService.AddComment(
+                    serviceRequestId,
+                    employeeId,
+                    commentText);
+
+                txtComment.Text = "";
+
+                LoadComments(serviceRequestId);
+
+                lblCommentMessage.Text =
+                    "Comment added successfully.";
+            }
+            catch (Exception ex)
+            {
+                lblCommentMessage.Text =
+                    "Unable to add comment.";
+
+                lblCommentMessage.CssClass =
+                    "text-danger";
+
+                System.Diagnostics.Debug
+                    .WriteLine(ex.ToString());
+            }
+        }
         private void DisplayRequest(
             ServiceRequest request)
         {
@@ -416,6 +551,34 @@ namespace Legacy2Modern.Web.ServiceRequests
                 System.Diagnostics.Debug
                     .WriteLine(ex.ToString());
             }
+        }
+
+        private void LoadCommentEmployees()
+        {
+            var employees =
+                _serviceRequestService
+                    .GetActiveEmployees();
+
+            ddlCommentEmployee.DataSource =
+                employees.Select(x => new
+                {
+                    EmployeeId = x.EmployeeId,
+
+                    DisplayName =
+                        x.EmployeeCode
+                        + " - "
+                        + x.FirstName
+                        + " "
+                        + x.LastName
+                }).ToList();
+
+            ddlCommentEmployee.DataTextField =
+                "DisplayName";
+
+            ddlCommentEmployee.DataValueField =
+                "EmployeeId";
+
+            ddlCommentEmployee.DataBind();
         }
     }
 }

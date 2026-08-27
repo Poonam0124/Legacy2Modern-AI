@@ -92,6 +92,7 @@
     <Compile Include="Repositories\CustomerProductRepository.cs" />
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
+    <Compile Include="Repositories\ServiceRequestCommentRepository.cs" />
     <Compile Include="Repositories\ServiceRequestRepository.cs" />
     <Compile Include="ServiceRequest.cs">
       <DependentUpon>Legacy2ModernModel.tt</DependentUpon>

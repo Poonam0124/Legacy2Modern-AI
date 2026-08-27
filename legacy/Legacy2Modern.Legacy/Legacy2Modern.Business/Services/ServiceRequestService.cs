@@ -25,10 +25,14 @@ namespace Legacy2Modern.Business.Services
         private readonly ServiceRequestRepository
             _serviceRequestRepository;
 
+        private readonly ServiceRequestCommentRepository
+    _commentRepository;
+
         public ServiceRequestService()
         {
-            _serviceRequestRepository =
-                new ServiceRequestRepository();
+            _serviceRequestRepository = new ServiceRequestRepository();
+
+            _commentRepository = new ServiceRequestCommentRepository();
         }
 
         public List<ServiceRequest> GetAll()
@@ -121,7 +125,7 @@ namespace Legacy2Modern.Business.Services
                    DateTime.Now.ToString("yyyyMMddHHmmssfff");
         }
 
-        public void AssignEmployee( int serviceRequestId,  int? employeeId)
+        public void AssignEmployee(int serviceRequestId, int? employeeId)
         {
             if (serviceRequestId <= 0)
             {
@@ -237,6 +241,57 @@ namespace Legacy2Modern.Business.Services
                         currentStatus,
                         newStatus));
             }
+        }
+
+        public List<ServiceRequestComment> GetComments(int serviceRequestId)
+        {
+            if (serviceRequestId <= 0)
+            {
+                throw new ArgumentException(
+                    "Invalid service request.");
+            }
+
+            return _commentRepository
+                .GetByServiceRequestId(
+                    serviceRequestId);
+        }
+        public void AddComment(
+    int serviceRequestId,
+    int? employeeId,
+    string commentText)
+        {
+            if (serviceRequestId <= 0)
+            {
+                throw new ArgumentException(
+                    "Invalid service request.");
+            }
+
+            if (string.IsNullOrWhiteSpace(
+                commentText))
+            {
+                throw new ArgumentException(
+                    "Comment cannot be empty.");
+            }
+
+            if (commentText.Length > 5000)
+            {
+                throw new ArgumentException(
+                    "Comment cannot exceed 5000 characters.");
+            }
+
+            var request =
+                GetById(serviceRequestId);
+
+            if (request == null)
+            {
+                throw new InvalidOperationException(
+                    "Service request not found.");
+            }
+
+            _commentRepository.AddComment(
+                serviceRequestId,
+                employeeId,
+                commentText.Trim());
         }
     }
 }
