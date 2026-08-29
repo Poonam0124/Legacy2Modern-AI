@@ -184,6 +184,7 @@ namespace Legacy2Modern.Business.Services
                 throw new ArgumentException(
                     "Status is required.");
             }
+
             newStatus = newStatus.Trim();
 
             var request =
@@ -206,6 +207,7 @@ namespace Legacy2Modern.Business.Services
                 throw new InvalidOperationException(
                     "Service request is already in this status.");
             }
+
             if (string.IsNullOrWhiteSpace(changeReason))
             {
                 throw new ArgumentException(
@@ -219,9 +221,17 @@ namespace Legacy2Modern.Business.Services
                 throw new ArgumentException(
                     "Change reason cannot exceed 1000 characters.");
             }
-            ValidateStatusTransition(
+
+            if (!LegacyWorkflowRules.IsValidTransition(
                 currentStatus,
-                newStatus);
+                newStatus))
+            {
+                throw new InvalidOperationException(
+                    string.Format(
+                        "Invalid status transition: {0} → {1}.",
+                        currentStatus,
+                        newStatus));
+            }
 
             _serviceRequestRepository
                 .ChangeStatus(
@@ -231,52 +241,6 @@ namespace Legacy2Modern.Business.Services
                     currentStatus,
                     changeReason);
         }
-        private void ValidateStatusTransition(
-     string currentStatus,
-     string newStatus)
-        {
-            bool isValid = false;
-
-            switch (currentStatus)
-            {
-                case StatusOpen:
-                    isValid =
-                       string.Equals(
-                           newStatus,
-                           StatusAssigned,
-                           StringComparison.OrdinalIgnoreCase);
-                    break;
-
-                case StatusAssigned:
-                    isValid = string.Equals(newStatus, StatusInProgress, StringComparison.OrdinalIgnoreCase) ||
-                              string.Equals(newStatus, StatusOpen, StringComparison.OrdinalIgnoreCase);
-                    break;
-
-                case StatusInProgress:
-                    isValid = string.Equals(newStatus, StatusResolved, StringComparison.OrdinalIgnoreCase) ||
-                              string.Equals(newStatus, StatusAssigned, StringComparison.OrdinalIgnoreCase);
-                    break;
-
-                case StatusResolved:
-                    isValid = string.Equals(newStatus, StatusClosed, StringComparison.OrdinalIgnoreCase) ||
-                              string.Equals(newStatus, StatusInProgress, StringComparison.OrdinalIgnoreCase);
-                    break;
-
-                case StatusClosed:
-                    isValid = false;
-                    break;
-            }
-
-            if (!isValid)
-            {
-                throw new InvalidOperationException(
-                    string.Format(
-                        "Invalid status transition: {0} → {1}.",
-                        currentStatus,
-                        newStatus));
-            }
-        }
-
         public List<ServiceRequestComment> GetComments(int serviceRequestId)
         {
             if (serviceRequestId <= 0)

@@ -49,3 +49,33 @@ Entity Framework 6
        |
        v
 SQL Server
+```   
+
+       
+## 4. Hard-coded Workflow Rules
+
+Service Request status transitions are implemented using
+hard-coded string comparisons and procedural conditional logic.
+
+Current supported transitions:
+
+- Open → Assigned
+- Assigned → Open
+- Assigned → In Progress
+- In Progress → Assigned
+- In Progress → Resolved
+- Resolved → In Progress
+- Resolved → Closed
+
+Closed is a terminal status and does not allow further transitions.
+
+The workflow is embedded in application code rather than being
+represented as an explicit workflow model.
+
+Potential modernization:
+
+- Explicit state/transition model
+- Centralized workflow definition
+- Strongly typed status representation
+- Configurable transition rules where appropriate
+- Automated workflow tests
