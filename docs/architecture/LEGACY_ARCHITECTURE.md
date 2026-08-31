@@ -79,3 +79,38 @@ Potential modernization:
 - Strongly typed status representation
 - Configurable transition rules where appropriate
 - Automated workflow tests
+
+### Scattered Business Status Rules
+
+Service Request status values are represented in multiple ways
+within the application.
+
+For example, the initial Service Request status is assigned using
+a hard-coded string:
+
+`Status = "Open"`
+
+while the Service Request service also maintains status constants
+such as:
+
+`StatusOpen = "Open"`
+
+The workflow helper additionally contains status values used for
+transition validation.
+
+This creates multiple representations of the same business concept.
+
+Potential risks:
+
+- Inconsistent status values
+- Changes requiring updates in multiple locations
+- Increased maintenance effort
+- Potential behavior differences between components
+- Difficulty identifying all usages of a business status
+
+Potential modernization:
+
+- Centralized status representation
+- Strongly typed status values
+- Explicit state model
+- Centralized workflow definition
