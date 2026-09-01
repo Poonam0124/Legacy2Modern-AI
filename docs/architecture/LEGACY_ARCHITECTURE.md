@@ -228,3 +228,47 @@ Potential modernization:
 
 Current state is intentionally retained as part of the legacy
 baseline.
+
+### UI Layer Contains Business Validation Logic
+
+Several WebForms code-behind files contain validation and decision
+logic that overlaps with business-layer responsibilities.
+
+For example, ServiceRequestCreate.aspx.cs validates required
+Service Request fields before calling the Business layer:
+
+    Customer
+    Request Type
+    Priority
+
+The page also determines whether optional Customer Product and
+Assigned Employee values should be converted into nullable IDs.
+
+The Business layer independently validates some of the same
+business requirements, for example:
+
+    customerId <= 0
+    Subject is required
+    Priority is required
+
+This creates a responsibility boundary that is not consistently
+defined.
+
+Potential risks:
+
+- Validation rules can become duplicated.
+- Different entry points may enforce different rules.
+- Business rules can become dependent on WebForms controls.
+- Automated testing of business rules becomes harder.
+- Future API or UI clients may need to duplicate validation logic.
+
+Potential modernization:
+
+- Keep presentation-specific validation in the Web layer.
+- Move domain/business invariants into the Business layer.
+- Avoid coupling business rules to WebForms controls.
+- Centralize reusable business validation.
+- Use DTOs/ViewModels to define application boundaries.
+
+Current state is intentionally retained as part of the legacy
+baseline.
