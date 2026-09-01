@@ -114,3 +114,60 @@ Potential modernization:
 - Strongly typed status values
 - Explicit state model
 - Centralized workflow definition
+
+### Cross-Layer Coupling: Web Layer Directly Depends on Data Layer
+
+The WebForms presentation layer has a direct project dependency on
+Legacy2Modern.Data in addition to its dependency on
+Legacy2Modern.Business.
+
+Current dependency structure:
+
+Web
+ ├── Business
+ └── Data
+
+This creates coupling between the presentation layer and the
+data-access layer.
+
+Several WebForms code-behind files directly use Entity Framework
+entity types from the Data layer.
+
+Examples include:
+
+- Customers/CustomerEdit.aspx.cs
+- Customers/CustomerContactEdit.aspx.cs
+- Customers/CustomerProductEdit.aspx.cs
+- ServiceRequests/ServiceRequestDetails.aspx.cs
+
+Examples of direct Data-layer entity usage include:
+
+    new Customer()
+
+    new CustomerContact()
+
+    new CustomerProduct()
+
+The Web layer therefore has knowledge of persistence-layer entity
+types instead of interacting exclusively through business-layer
+contracts/services.
+
+Potential risks:
+
+- Changes to EF entities can directly affect WebForms pages.
+- Presentation code becomes coupled to persistence implementation.
+- Testing the Web layer becomes more difficult.
+- Migration from EF6 to another persistence technology becomes harder.
+- Business and presentation responsibilities can become mixed.
+- The dependency graph becomes harder to maintain as the application grows.
+
+Current state is intentionally retained as part of the legacy baseline.
+
+Potential modernization:
+
+- Remove direct Web → Data project dependency.
+- Keep Web dependent on Business.
+- Move persistence-specific entity usage behind business/service boundaries.
+- Introduce DTOs/ViewModels where appropriate.
+- Keep EF entities inside the Data layer.
+- Return application-specific models from the Business layer.
