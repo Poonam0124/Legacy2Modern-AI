@@ -19,10 +19,10 @@ namespace Legacy2Modern.Business.Repositories
                         "Workflow behavior is represented through hard-coded rules.",
                     Evidence =
                         "Workflow-related status and transition logic is implemented directly in application code.",
-                    Risk = "Medium",
+                    Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Centralize workflow rules behind a dedicated business/domain rule component.",
-                    Priority = "High"
+                    Priority = ModernizationPriority.High
                 },
 
                 new ModernizationFinding
@@ -34,10 +34,10 @@ namespace Legacy2Modern.Business.Repositories
                         "Status values and status-related conditions are implemented in multiple locations.",
                     Evidence =
                         "Status comparisons such as 'Active', 'Open', and 'In Progress' are represented as hard-coded values.",
-                    Risk = "Medium",
+                    Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Centralize status definitions and business transitions.",
-                    Priority = "High"
+                    Priority = ModernizationPriority.High
                 },
 
                 new ModernizationFinding
@@ -49,10 +49,10 @@ namespace Legacy2Modern.Business.Repositories
                         "The Web layer directly references the Data layer and EF6 entities.",
                     Evidence =
                         "WebForms code-behind directly uses Customer, CustomerContact, CustomerProduct, ServiceRequest, and Employee entities.",
-                    Risk = "High",
+                    Risk = ModernizationRisk.High,
                     Recommendation =
                         "Reduce the direct Web to Data dependency and introduce application models or DTOs where appropriate.",
-                    Priority = "High"
+                    Priority =ModernizationPriority.High
                 },
 
                 new ModernizationFinding
@@ -64,10 +64,10 @@ namespace Legacy2Modern.Business.Repositories
                         "Development-oriented and environment-specific settings are directly present in Web.config.",
                     Evidence =
                         "debug=true and LocalDB connection configuration are present in Web.config.",
-                    Risk = "Medium",
+                    Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Introduce environment-aware configuration and externalize environment-specific settings.",
-                    Priority = "Medium"
+                    Priority = ModernizationPriority.Medium
                 },
 
                 new ModernizationFinding
@@ -79,10 +79,10 @@ namespace Legacy2Modern.Business.Repositories
                         "WebForms code-behind contains validation that overlaps with business-layer validation.",
                     Evidence =
                         "ServiceRequestCreate.aspx.cs validates Customer, Request Type, and Priority while the Business layer independently validates business requirements.",
-                    Risk = "Medium",
+                    Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Keep presentation validation in Web and centralize business invariants in the Business layer.",
-                    Priority = "Medium"
+                    Priority = ModernizationPriority.Medium
                 }
             };
         }

@@ -12,10 +12,10 @@
 
         public string Evidence { get; set; }
 
-        public string Risk { get; set; }
+        public ModernizationRisk Risk { get; set; }
 
         public string Recommendation { get; set; }
 
-        public string Priority { get; set; }
+        public ModernizationPriority Priority { get; set; }
     }
 }
