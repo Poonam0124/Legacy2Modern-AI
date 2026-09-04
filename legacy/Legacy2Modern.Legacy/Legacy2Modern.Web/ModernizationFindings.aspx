@@ -50,6 +50,14 @@
                     HeaderText="Priority" />
 
                 <asp:BoundField
+                    DataField="AffectedLayer"
+                    HeaderText="Affected Layer" />
+
+                <asp:BoundField
+                    DataField="ModernizationType"
+                    HeaderText="Modernization Type" />
+
+                <asp:BoundField
                     DataField="Recommendation"
                     HeaderText="Recommendation" />
 

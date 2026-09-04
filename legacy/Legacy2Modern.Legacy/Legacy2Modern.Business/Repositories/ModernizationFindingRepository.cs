@@ -10,7 +10,7 @@ namespace Legacy2Modern.Business.Repositories
         {
             return new List<ModernizationFinding>
             {
-                new ModernizationFinding
+               new ModernizationFinding
                 {
                     Id = "M3.2",
                     Category = "Business Rules",
@@ -22,10 +22,12 @@ namespace Legacy2Modern.Business.Repositories
                     Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Centralize workflow rules behind a dedicated business/domain rule component.",
-                    Priority = ModernizationPriority.High
+                    Priority = ModernizationPriority.High,
+                    AffectedLayer = "Business",
+                    ModernizationType = "Refactoring"
                 },
 
-                new ModernizationFinding
+               new ModernizationFinding
                 {
                     Id = "M3.3",
                     Category = "Business Rules",
@@ -37,7 +39,9 @@ namespace Legacy2Modern.Business.Repositories
                     Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Centralize status definitions and business transitions.",
-                    Priority = ModernizationPriority.High
+                    Priority = ModernizationPriority.High,
+                    AffectedLayer = "Business",
+                    ModernizationType = "Refactoring"
                 },
 
                 new ModernizationFinding
@@ -52,7 +56,9 @@ namespace Legacy2Modern.Business.Repositories
                     Risk = ModernizationRisk.High,
                     Recommendation =
                         "Reduce the direct Web to Data dependency and introduce application models or DTOs where appropriate.",
-                    Priority =ModernizationPriority.High
+                    Priority = ModernizationPriority.High,
+                    AffectedLayer = "Web / Data",
+                    ModernizationType = "Architecture"
                 },
 
                 new ModernizationFinding
@@ -67,7 +73,9 @@ namespace Legacy2Modern.Business.Repositories
                     Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Introduce environment-aware configuration and externalize environment-specific settings.",
-                    Priority = ModernizationPriority.Medium
+                    Priority = ModernizationPriority.Medium,
+                    AffectedLayer = "Web",
+                    ModernizationType = "Configuration"
                 },
 
                 new ModernizationFinding
@@ -82,7 +90,9 @@ namespace Legacy2Modern.Business.Repositories
                     Risk = ModernizationRisk.Medium,
                     Recommendation =
                         "Keep presentation validation in Web and centralize business invariants in the Business layer.",
-                    Priority = ModernizationPriority.Medium
+                    Priority = ModernizationPriority.Medium,
+                    AffectedLayer = "Web / Business",
+                    ModernizationType = "Architecture"
                 }
             };
         }

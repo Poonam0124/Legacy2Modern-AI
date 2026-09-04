@@ -17,5 +17,9 @@
         public string Recommendation { get; set; }
 
         public ModernizationPriority Priority { get; set; }
+
+        public string AffectedLayer { get; set; }
+
+        public string ModernizationType { get; set; }
     }
 }
