@@ -44,6 +44,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Models\ModernizationEffort.cs" />
     <Compile Include="Models\ModernizationFinding.cs" />
+    <Compile Include="Models\ModernizationFindingExport.cs" />
     <Compile Include="Models\ModernizationFindingStatus.cs" />
     <Compile Include="Models\ModernizationFindingSummary.cs" />
     <Compile Include="Models\ModernizationPriority.cs" />

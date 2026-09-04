@@ -133,6 +133,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="ModernizationExport.aspx" />
     <Content Include="ModernizationFindings.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -259,6 +260,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ModernizationExport.aspx.cs">
+      <DependentUpon>ModernizationExport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModernizationExport.aspx.designer.cs">
+      <DependentUpon>ModernizationExport.aspx</DependentUpon>
     </Compile>
     <Compile Include="ModernizationFindings.aspx.cs">
       <DependentUpon>ModernizationFindings.aspx</DependentUpon>
