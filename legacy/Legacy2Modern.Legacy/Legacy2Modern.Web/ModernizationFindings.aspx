@@ -16,7 +16,71 @@
         <p class="text-muted">
             Findings identified during legacy application assessment.
         </p>
+        <div class="row mb-4">
 
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>Total Findings</h6>
+                        <h3>
+                            <asp:Label
+                                ID="lblTotalFindings"
+                                runat="server" />
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>High/Critical Risk</h6>
+                        <h3>
+                            <asp:Label
+                                ID="lblHighRisk"
+                                runat="server" />
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>High/Critical Priority</h6>
+                        <h3>
+                            <asp:Label
+                                ID="lblHighPriority"
+                                runat="server" />
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h6>Identified</h6>
+                        <h3>
+                            <asp:Label
+                                ID="lblIdentified"
+                                runat="server" />
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <h5>Estimated Effort Distribution</h5>
+
+        <div class="mb-4">
+
+            <asp:Label
+                ID="lblEffortDistribution"
+                runat="server" />
+
+        </div>
         <asp:GridView ID="gvFindings"
             runat="server"
             AutoGenerateColumns="False"

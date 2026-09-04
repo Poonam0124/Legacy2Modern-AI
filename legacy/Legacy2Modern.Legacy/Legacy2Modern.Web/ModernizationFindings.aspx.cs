@@ -12,6 +12,7 @@ namespace Legacy2Modern.Web
         {
             if (!IsPostBack)
             {
+                LoadSummary();
                 LoadFindings();
             }
         }
@@ -22,6 +23,31 @@ namespace Legacy2Modern.Web
 
             gvFindings.DataSource = findings;
             gvFindings.DataBind();
+        }
+
+        private void LoadSummary()
+        {
+            var summary = _findingService.GetSummary();
+
+            lblTotalFindings.Text =
+                summary.TotalFindings.ToString();
+
+            lblHighRisk.Text =
+                summary.HighOrCriticalRiskCount.ToString();
+
+            lblHighPriority.Text =
+                summary.HighOrCriticalPriorityCount.ToString();
+
+            lblIdentified.Text =
+                summary.IdentifiedCount.ToString();
+
+            lblEffortDistribution.Text =
+                string.Format(
+                    "Low: {0} | Medium: {1} | High: {2} | Very High: {3}",
+                    summary.LowEffortCount,
+                    summary.MediumEffortCount,
+                    summary.HighEffortCount,
+                    summary.VeryHighEffortCount);
         }
     }
 }
