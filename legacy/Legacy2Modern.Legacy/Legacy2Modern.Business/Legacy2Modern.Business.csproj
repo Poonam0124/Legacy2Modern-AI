@@ -42,7 +42,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\ModernizationEffort.cs" />
     <Compile Include="Models\ModernizationFinding.cs" />
+    <Compile Include="Models\ModernizationFindingStatus.cs" />
     <Compile Include="Models\ModernizationPriority.cs" />
     <Compile Include="Models\ModernizationRisk.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

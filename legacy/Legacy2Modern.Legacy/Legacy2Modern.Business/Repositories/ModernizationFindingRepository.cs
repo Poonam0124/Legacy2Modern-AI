@@ -24,7 +24,9 @@ namespace Legacy2Modern.Business.Repositories
                         "Centralize workflow rules behind a dedicated business/domain rule component.",
                     Priority = ModernizationPriority.High,
                     AffectedLayer = "Business",
-                    ModernizationType = "Refactoring"
+                    ModernizationType = "Refactoring",
+                    Status = ModernizationFindingStatus.Identified,
+                    EstimatedEffort = ModernizationEffort.Medium
                 },
 
                new ModernizationFinding
@@ -41,7 +43,9 @@ namespace Legacy2Modern.Business.Repositories
                         "Centralize status definitions and business transitions.",
                     Priority = ModernizationPriority.High,
                     AffectedLayer = "Business",
-                    ModernizationType = "Refactoring"
+                    ModernizationType = "Refactoring",
+                    Status = ModernizationFindingStatus.Identified,
+                    EstimatedEffort = ModernizationEffort.Medium
                 },
 
                 new ModernizationFinding
@@ -58,7 +62,9 @@ namespace Legacy2Modern.Business.Repositories
                         "Reduce the direct Web to Data dependency and introduce application models or DTOs where appropriate.",
                     Priority = ModernizationPriority.High,
                     AffectedLayer = "Web / Data",
-                    ModernizationType = "Architecture"
+                    ModernizationType = "Architecture",
+                    Status = ModernizationFindingStatus.Identified,
+                    EstimatedEffort = ModernizationEffort.High
                 },
 
                 new ModernizationFinding
@@ -75,7 +81,9 @@ namespace Legacy2Modern.Business.Repositories
                         "Introduce environment-aware configuration and externalize environment-specific settings.",
                     Priority = ModernizationPriority.Medium,
                     AffectedLayer = "Web",
-                    ModernizationType = "Configuration"
+                    ModernizationType = "Configuration",
+                    Status = ModernizationFindingStatus.Identified,
+                    EstimatedEffort = ModernizationEffort.Medium
                 },
 
                 new ModernizationFinding
@@ -92,7 +100,9 @@ namespace Legacy2Modern.Business.Repositories
                         "Keep presentation validation in Web and centralize business invariants in the Business layer.",
                     Priority = ModernizationPriority.Medium,
                     AffectedLayer = "Web / Business",
-                    ModernizationType = "Architecture"
+                    ModernizationType = "Architecture",
+                    Status = ModernizationFindingStatus.Identified,
+                    EstimatedEffort = ModernizationEffort.Medium
                 }
             };
         }

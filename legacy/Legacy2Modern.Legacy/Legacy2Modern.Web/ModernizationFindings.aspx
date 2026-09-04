@@ -58,6 +58,14 @@
                     HeaderText="Modernization Type" />
 
                 <asp:BoundField
+                    DataField="Status"
+                    HeaderText="Status" />
+
+                <asp:BoundField
+                    DataField="EstimatedEffort"
+                    HeaderText="Estimated Effort" />
+
+                <asp:BoundField
                     DataField="Recommendation"
                     HeaderText="Recommendation" />
 

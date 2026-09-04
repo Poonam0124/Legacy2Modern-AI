@@ -21,5 +21,8 @@
         public string AffectedLayer { get; set; }
 
         public string ModernizationType { get; set; }
+        public ModernizationFindingStatus Status { get; set; }
+
+        public ModernizationEffort EstimatedEffort { get; set; }
     }
 }
