@@ -43,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Class1.cs" />
     <Compile Include="Models\AI\AIProviderConfiguration.cs" />
+    <Compile Include="Models\AI\ModernizationAnalysisContext.cs" />
     <Compile Include="Models\AI\ModernizationAnalysisRequest.cs" />
     <Compile Include="Models\AI\ModernizationAnalysisResponse.cs" />
+    <Compile Include="Models\AI\ModernizationPrompt.cs" />
     <Compile Include="Models\AI\ModernizationRecommendation.cs" />
     <Compile Include="Models\ModernizationEffort.cs" />
     <Compile Include="Models\ModernizationFinding.cs" />
@@ -59,8 +61,10 @@
     <Compile Include="Repositories\ModernizationFindingRepository.cs" />
     <Compile Include="Services\AI\IAIProvider.cs" />
     <Compile Include="Services\AI\IModernizationAIService.cs" />
+    <Compile Include="Services\AI\IModernizationPromptBuilder.cs" />
     <Compile Include="Services\AI\MockModernizationAIService.cs" />
     <Compile Include="Services\AI\ModernizationAIService.cs" />
+    <Compile Include="Services\AI\ModernizationPromptBuilder.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\LegacyWorkflowRules.cs" />
     <Compile Include="Services\ModernizationFindingService.cs" />
