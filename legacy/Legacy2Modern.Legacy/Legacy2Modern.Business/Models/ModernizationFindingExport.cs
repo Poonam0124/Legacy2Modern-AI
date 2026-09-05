@@ -14,5 +14,9 @@
         public string ModernizationType { get; set; }
         public string Status { get; set; }
         public string EstimatedEffort { get; set; }
+
+        public string RecommendedStrategy { get; set; }
+
+        public string ExpectedBenefit { get; set; }
     }
 }

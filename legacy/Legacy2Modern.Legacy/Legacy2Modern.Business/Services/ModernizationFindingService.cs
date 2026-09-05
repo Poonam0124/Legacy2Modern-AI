@@ -65,22 +65,24 @@ namespace Legacy2Modern.Business.Services
             var findings = _repository.GetAll();
 
             return findings
-                .Select(x => new ModernizationFindingExport
-                {
-                    Id = x.Id,
-                    Category = x.Category,
-                    Title = x.Title,
-                    Description = x.Description,
-                    Evidence = x.Evidence,
-                    Risk = x.Risk.ToString(),
-                    Recommendation = x.Recommendation,
-                    Priority = x.Priority.ToString(),
-                    AffectedLayer = x.AffectedLayer,
-                    ModernizationType = x.ModernizationType,
-                    Status = x.Status.ToString(),
-                    EstimatedEffort = x.EstimatedEffort.ToString()
-                })
-                .ToList();
+                 .Select(x => new ModernizationFindingExport
+                 {
+                     Id = x.Id,
+                     Category = x.Category,
+                     Title = x.Title,
+                     Description = x.Description,
+                     Evidence = x.Evidence,
+                     Risk = x.Risk.ToString(),
+                     Recommendation = x.Recommendation,
+                     Priority = x.Priority.ToString(),
+                     AffectedLayer = x.AffectedLayer,
+                     ModernizationType = x.ModernizationType,
+                     Status = x.Status.ToString(),
+                     EstimatedEffort = x.EstimatedEffort.ToString(),
+                     RecommendedStrategy = x.RecommendedStrategy.ToString(),
+                     ExpectedBenefit = x.ExpectedBenefit
+                 })
+                 .ToList();
         }
     }
 }

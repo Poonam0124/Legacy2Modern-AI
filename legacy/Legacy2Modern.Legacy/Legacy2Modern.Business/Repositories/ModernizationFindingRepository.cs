@@ -26,7 +26,9 @@ namespace Legacy2Modern.Business.Repositories
                     AffectedLayer = "Business",
                     ModernizationType = "Refactoring",
                     Status = ModernizationFindingStatus.Identified,
-                    EstimatedEffort = ModernizationEffort.Medium
+                    EstimatedEffort = ModernizationEffort.Medium,
+                    RecommendedStrategy = ModernizationStrategy.Extract,
+                    ExpectedBenefit = "Centralize workflow rules in a dedicated service or domain component."
                 },
 
                new ModernizationFinding
@@ -45,7 +47,9 @@ namespace Legacy2Modern.Business.Repositories
                     AffectedLayer = "Business",
                     ModernizationType = "Refactoring",
                     Status = ModernizationFindingStatus.Identified,
-                    EstimatedEffort = ModernizationEffort.Medium
+                    EstimatedEffort = ModernizationEffort.Medium,
+                    RecommendedStrategy = ModernizationStrategy.Refactor,
+                    ExpectedBenefit = "Centralize status definitions and transition rules to improve consistency."
                 },
 
                 new ModernizationFinding
@@ -64,7 +68,9 @@ namespace Legacy2Modern.Business.Repositories
                     AffectedLayer = "Web / Data",
                     ModernizationType = "Architecture",
                     Status = ModernizationFindingStatus.Identified,
-                    EstimatedEffort = ModernizationEffort.High
+                    EstimatedEffort = ModernizationEffort.High,
+                    RecommendedStrategy = ModernizationStrategy.Decouple,
+                    ExpectedBenefit = "Remove direct Web-to-Data dependencies and establish cleaner application boundaries."
                 },
 
                 new ModernizationFinding
@@ -83,7 +89,9 @@ namespace Legacy2Modern.Business.Repositories
                     AffectedLayer = "Web",
                     ModernizationType = "Configuration",
                     Status = ModernizationFindingStatus.Identified,
-                    EstimatedEffort = ModernizationEffort.Medium
+                    EstimatedEffort = ModernizationEffort.Medium,
+                    RecommendedStrategy = ModernizationStrategy.Reconfigure,
+                    ExpectedBenefit =  "Move environment-specific settings out of source-controlled application configuration."
                 },
 
                 new ModernizationFinding
@@ -102,7 +110,9 @@ namespace Legacy2Modern.Business.Repositories
                     AffectedLayer = "Web / Business",
                     ModernizationType = "Architecture",
                     Status = ModernizationFindingStatus.Identified,
-                    EstimatedEffort = ModernizationEffort.Medium
+                    EstimatedEffort = ModernizationEffort.Medium,
+                    RecommendedStrategy = ModernizationStrategy.Extract,
+                    ExpectedBenefit = "Move business validation into reusable application services and reduce UI coupling."
                 }
             };
         }

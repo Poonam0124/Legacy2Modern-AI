@@ -122,6 +122,14 @@
                     HeaderText="Modernization Type" />
 
                 <asp:BoundField
+                    DataField="RecommendedStrategy"
+                    HeaderText="Strategy" />
+
+                <asp:BoundField
+                    DataField="ExpectedBenefit"
+                    HeaderText="Expected Benefit" />
+
+                <asp:BoundField
                     DataField="Status"
                     HeaderText="Status" />
 

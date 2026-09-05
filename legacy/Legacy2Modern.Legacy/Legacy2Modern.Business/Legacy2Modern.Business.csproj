@@ -49,6 +49,7 @@
     <Compile Include="Models\ModernizationFindingSummary.cs" />
     <Compile Include="Models\ModernizationPriority.cs" />
     <Compile Include="Models\ModernizationRisk.cs" />
+    <Compile Include="Models\ModernizationStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IModernizationFindingRepository.cs" />
     <Compile Include="Repositories\ModernizationFindingRepository.cs" />

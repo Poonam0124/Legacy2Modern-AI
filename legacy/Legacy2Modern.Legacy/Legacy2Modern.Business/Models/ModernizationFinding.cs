@@ -24,5 +24,9 @@
         public ModernizationFindingStatus Status { get; set; }
 
         public ModernizationEffort EstimatedEffort { get; set; }
+
+        public ModernizationStrategy RecommendedStrategy { get; set; }
+
+        public string ExpectedBenefit { get; set; }
     }
 }
