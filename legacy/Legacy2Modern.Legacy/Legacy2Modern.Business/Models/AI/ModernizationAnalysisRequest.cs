@@ -9,5 +9,7 @@ namespace Legacy2Modern.Business.Models.AI
         public string TechnologyStack { get; set; }
 
         public List<ModernizationFindingExport> Findings { get; set; }
+
+        public ModernizationPrompt Prompt { get; set; }
     }
 }
