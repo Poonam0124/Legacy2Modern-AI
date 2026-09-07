@@ -31,6 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -67,6 +70,7 @@
     <Compile Include="Services\AI\ModernizationAIRequestBuilder.cs" />
     <Compile Include="Services\AI\ModernizationAIService.cs" />
     <Compile Include="Services\AI\ModernizationPromptBuilder.cs" />
+    <Compile Include="Services\AI\OllamaAIProvider.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\LegacyWorkflowRules.cs" />
     <Compile Include="Services\ModernizationFindingService.cs" />
@@ -81,6 +85,8 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

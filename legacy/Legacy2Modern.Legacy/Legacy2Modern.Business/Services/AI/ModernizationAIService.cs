@@ -1,4 +1,5 @@
-﻿using Legacy2Modern.Business.Models.AI;
+﻿using System;
+using Legacy2Modern.Business.Models.AI;
 
 namespace Legacy2Modern.Business.Services.AI
 {
@@ -10,12 +11,18 @@ namespace Legacy2Modern.Business.Services.AI
         public ModernizationAIService(
             IAIProvider provider)
         {
+            if (provider == null)
+                throw new ArgumentNullException("provider");
+
             _provider = provider;
         }
 
         public ModernizationAnalysisResponse Analyze(
             ModernizationAnalysisRequest request)
         {
+            if (request == null)
+                throw new ArgumentNullException("request");
+
             return _provider.Analyze(request);
         }
     }
