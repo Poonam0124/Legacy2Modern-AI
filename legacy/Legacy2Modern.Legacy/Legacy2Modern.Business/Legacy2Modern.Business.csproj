@@ -62,13 +62,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IModernizationFindingRepository.cs" />
     <Compile Include="Repositories\ModernizationFindingRepository.cs" />
+    <Compile Include="Services\AI\AIProviderFactory.cs" />
     <Compile Include="Services\AI\IAIProvider.cs" />
+    <Compile Include="Services\AI\IAIProviderFactory.cs" />
     <Compile Include="Services\AI\IModernizationAIRequestBuilder.cs" />
     <Compile Include="Services\AI\IModernizationAIService.cs" />
+    <Compile Include="Services\AI\IModernizationAnalysisService.cs" />
     <Compile Include="Services\AI\IModernizationPromptBuilder.cs" />
     <Compile Include="Services\AI\MockModernizationAIService.cs" />
     <Compile Include="Services\AI\ModernizationAIRequestBuilder.cs" />
     <Compile Include="Services\AI\ModernizationAIService.cs" />
+    <Compile Include="Services\AI\ModernizationAnalysisService.cs" />
     <Compile Include="Services\AI\ModernizationPromptBuilder.cs" />
     <Compile Include="Services\AI\OllamaAIProvider.cs" />
     <Compile Include="Services\CustomerService.cs" />

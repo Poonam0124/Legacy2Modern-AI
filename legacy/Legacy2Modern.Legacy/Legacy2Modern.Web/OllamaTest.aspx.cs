@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using Legacy2Modern.Business.Models.AI;
-using Legacy2Modern.Business.Models;
 using Legacy2Modern.Business.Services;
 using Legacy2Modern.Business.Services.AI;
 
@@ -19,27 +18,6 @@ namespace Legacy2Modern.Web
                 var findingService =
                     new ModernizationFindingService();
 
-                var findings =
-                    findingService.GetExportData();
-
-                var context =
-                    new ModernizationAnalysisContext
-                    {
-                        ApplicationName =
-                            "Legacy2Modern-AI",
-
-                        ApplicationDescription =
-                            "A legacy ASP.NET Web Forms application being incrementally modernized.",
-
-                        TechnologyStack =
-                            "ASP.NET Web Forms, .NET Framework 4.8, C#, Entity Framework 6, SQL Server",
-
-                        ModernizationGoal =
-                            "Identify practical modernization opportunities while minimizing business disruption.",
-
-                        Findings = findings
-                    };
-
                 var promptBuilder =
                     new ModernizationPromptBuilder();
 
@@ -47,20 +25,47 @@ namespace Legacy2Modern.Web
                     new ModernizationAIRequestBuilder(
                         promptBuilder);
 
-                var request =
-                    requestBuilder.Build(context);
+                var configuration =
+                    new AIProviderConfiguration
+                    {
+                        ProviderName =
+                            ConfigurationManager.AppSettings[
+                                "AIProvider"],
+
+                        ModelName =
+                            ConfigurationManager.AppSettings[
+                                "AIModel"],
+
+                        Endpoint =
+                            ConfigurationManager.AppSettings[
+                                "AIEndpoint"],
+
+                        TimeoutSeconds =
+                            int.Parse(
+                                ConfigurationManager.AppSettings[
+                                    "AITimeoutSeconds"])
+                    };
+
+                var providerFactory =
+                    new AIProviderFactory();
 
                 var provider =
-                    new OllamaAIProvider(
-                        "http://localhost:11434/api/generate",
-                        "qwen3:4b");
+                    providerFactory.Create(
+                        configuration);
 
                 var aiService =
                     new ModernizationAIService(
                         provider);
 
+                var analysisService =
+                    new ModernizationAnalysisService(
+                        findingService,
+                        promptBuilder,
+                        requestBuilder,
+                        aiService);
+
                 var response =
-                    aiService.Analyze(request);
+                    analysisService.Analyze();
 
                 var html =
                     new StringBuilder();
@@ -83,9 +88,12 @@ namespace Legacy2Modern.Web
             catch (Exception ex)
             {
                 lblResult.Text =
-                    "<strong>Error:</strong> " +
+                    "<strong>Error:</strong><br/>" +
                     Server.HtmlEncode(
-                        ex.Message);
+                        ex.ToString())
+                    .Replace(
+                        Environment.NewLine,
+                        "<br/>");
             }
         }
     }

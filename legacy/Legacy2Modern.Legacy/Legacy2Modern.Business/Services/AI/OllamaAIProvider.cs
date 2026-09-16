@@ -1,8 +1,9 @@
-﻿using System;
+﻿using Legacy2Modern.Business.Models.AI;
+using Newtonsoft.Json;
+using System;
 using System.Net.Http;
 using System.Text;
-using Legacy2Modern.Business.Models.AI;
-using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Legacy2Modern.Business.Services.AI
 {
@@ -10,13 +11,16 @@ namespace Legacy2Modern.Business.Services.AI
     {
         private readonly string _endpoint;
         private readonly string _model;
+        private readonly int _timeoutSeconds;
 
         public OllamaAIProvider(
-            string endpoint,
-            string model)
+     string endpoint,
+     string model,
+     int timeoutSeconds = 120)
         {
             _endpoint = endpoint;
             _model = model;
+            _timeoutSeconds = timeoutSeconds;
         }
 
         public ModernizationAnalysisResponse Analyze(
@@ -47,8 +51,7 @@ namespace Legacy2Modern.Business.Services.AI
 
             using (var client = new HttpClient())
             {
-                client.Timeout =
-                    TimeSpan.FromSeconds(120);
+                client.Timeout = TimeSpan.FromSeconds(_timeoutSeconds);
 
                 using (var content =
                     new StringContent(
@@ -56,12 +59,25 @@ namespace Legacy2Modern.Business.Services.AI
                         Encoding.UTF8,
                         "application/json"))
                 {
-                    var response =
-                        client.PostAsync(
-                            _endpoint,
-                            content)
-                        .GetAwaiter()
-                        .GetResult();
+                    HttpResponseMessage response;
+
+                    try
+                    {
+                        response =
+                            client.PostAsync(
+                                _endpoint,
+                                content)
+                            .GetAwaiter()
+                            .GetResult();
+                    }
+                    catch (TaskCanceledException ex)
+                    {
+                        throw new InvalidOperationException(
+                            "The AI request timed out or was cancelled. " +
+                            "Endpoint: " + _endpoint +
+                            ". Timeout: " + _timeoutSeconds + " seconds.",
+                            ex);
+                    }
 
                     response.EnsureSuccessStatusCode();
 
