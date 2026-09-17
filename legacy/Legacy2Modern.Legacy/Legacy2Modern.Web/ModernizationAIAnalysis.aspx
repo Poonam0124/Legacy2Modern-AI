@@ -11,7 +11,6 @@
     <title>AI Modernization Analysis</title>
 
     <style>
-
         body {
             font-family: Arial, Helvetica, sans-serif;
             margin: 0;
@@ -29,14 +28,14 @@
             margin-bottom: 25px;
         }
 
-        .page-header h1 {
-            margin-bottom: 8px;
-        }
+            .page-header h1 {
+                margin-bottom: 8px;
+            }
 
-        .page-header p {
-            color: #666;
-            margin-top: 0;
-        }
+            .page-header p {
+                color: #666;
+                margin-top: 0;
+            }
 
         .action-bar {
             background: #ffffff;
@@ -62,11 +61,11 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .analysis-section h2 {
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 20px;
-        }
+            .analysis-section h2 {
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 20px;
+            }
 
         .analysis-content {
             line-height: 1.6;
@@ -83,6 +82,65 @@
             color: #555;
         }
 
+        .recommendations-section {
+            margin-top: 25px;
+        }
+
+        .recommendation-card {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 22px;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border-left: 4px solid #555;
+        }
+
+        .recommendation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+            .recommendation-header h3 {
+                margin: 0;
+                font-size: 18px;
+            }
+
+        .finding-id {
+            font-weight: bold;
+        }
+
+        .recommendation-item {
+            margin-bottom: 16px;
+        }
+
+            .recommendation-item strong {
+                display: block;
+                margin-bottom: 6px;
+            }
+
+        .recommendation-content {
+            line-height: 1.6;
+            white-space: pre-line;
+        }
+
+        .recommendation-meta {
+            display: flex;
+            gap: 25px;
+            margin-top: 18px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            font-size: 14px;
+        }
+
+        .meta-label {
+            font-weight: bold;
+        }
     </style>
 
 </head>
@@ -173,6 +231,19 @@
                         runat="server" />
 
                 </div>
+
+            </div>
+            <div class="recommendations-section">
+
+                <h2>AI Modernization Recommendations</h2>
+
+                <p class="section-description">
+                    Detailed recommendations generated for the identified modernization findings.
+                </p>
+
+                <asp:PlaceHolder
+                    ID="phRecommendations"
+                    runat="server" />
 
             </div>
 
