@@ -13,14 +13,27 @@ namespace Legacy2Modern.Business.Services.AI
         private readonly string _model;
         private readonly int _timeoutSeconds;
 
+        private readonly IModernizationAIResponseParser _responseParser;
+        private readonly IModernizationAIResponseValidator _responseValidator;
+
         public OllamaAIProvider(
-     string endpoint,
-     string model,
-     int timeoutSeconds = 120)
+    string endpoint,
+    string model,
+    int timeoutSeconds = 120,
+    IModernizationAIResponseParser responseParser = null,
+    IModernizationAIResponseValidator responseValidator = null)
         {
             _endpoint = endpoint;
             _model = model;
             _timeoutSeconds = timeoutSeconds;
+
+            _responseParser =
+                responseParser ??
+                new ModernizationAIResponseParser();
+
+            _responseValidator =
+                responseValidator ??
+                new ModernizationAIResponseValidator();
         }
 
         public ModernizationAnalysisResponse Analyze(
@@ -82,24 +95,37 @@ namespace Legacy2Modern.Business.Services.AI
                     response.EnsureSuccessStatusCode();
 
                     var responseJson =
-                        response.Content
-                            .ReadAsStringAsync()
-                            .GetAwaiter()
-                            .GetResult();
+    response.Content
+        .ReadAsStringAsync()
+        .GetAwaiter()
+        .GetResult();
 
                     var ollamaResponse =
                         JsonConvert.DeserializeObject<OllamaResponse>(
                             responseJson);
 
                     if (ollamaResponse == null)
+                    {
                         throw new InvalidOperationException(
                             "Ollama returned an empty response.");
+                    }
 
-                    return new ModernizationAnalysisResponse
+                    if (string.IsNullOrWhiteSpace(
+                        ollamaResponse.Response))
                     {
-                        OverallAssessment =
-                            ollamaResponse.Response
-                    };
+                        throw new InvalidOperationException(
+                            "Ollama returned an empty AI response.");
+                    }
+
+                    var analysis =
+                        _responseParser.Parse(
+                            ollamaResponse.Response);
+
+                    _responseValidator.Validate(
+                        analysis,
+                        request.Findings);
+
+                    return analysis;
                 }
             }
         }

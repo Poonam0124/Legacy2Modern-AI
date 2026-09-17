@@ -73,14 +73,78 @@ namespace Legacy2Modern.Web
                 html.Append(
                     "<h3>AI Analysis Result</h3>");
 
-                html.Append(
-                    "<p><strong>Overall Assessment:</strong></p>");
+                html.Append("<p><strong>Overall Assessment:</strong></p>");
 
                 html.Append(
                     "<p>" +
                     Server.HtmlEncode(
                         response.OverallAssessment) +
                     "</p>");
+
+                html.Append(
+                    "<p><strong>Recommended Approach:</strong></p>");
+
+                html.Append(
+                    "<p>" +
+                    Server.HtmlEncode(
+                        response.RecommendedApproach) +
+                    "</p>");
+
+                html.Append(
+                    "<p><strong>Target Architecture:</strong></p>");
+
+                html.Append(
+                    "<p>" +
+                    Server.HtmlEncode(
+                        response.TargetArchitecture) +
+                    "</p>");
+
+                html.Append(
+                    "<p><strong>Recommendations:</strong></p>");
+
+                if (response.Recommendations != null)
+                {
+                    foreach (var recommendation
+                        in response.Recommendations)
+                    {
+                        html.Append("<hr />");
+
+                        html.Append(
+                            "<p><strong>Finding:</strong> " +
+                            Server.HtmlEncode(
+                                recommendation.FindingId) +
+                            "</p>");
+
+                        html.Append(
+                            "<p><strong>Action:</strong> " +
+                            Server.HtmlEncode(
+                                recommendation.RecommendedAction) +
+                            "</p>");
+
+                        html.Append(
+                            "<p><strong>Reasoning:</strong> " +
+                            Server.HtmlEncode(
+                                recommendation.Reasoning) +
+                            "</p>");
+
+                        html.Append(
+                            "<p><strong>Risk:</strong> " +
+                            Server.HtmlEncode(
+                                recommendation.Risk) +
+                            "</p>");
+
+                        html.Append(
+                            "<p><strong>Complexity:</strong> " +
+                            Server.HtmlEncode(
+                                recommendation.Complexity) +
+                            "</p>");
+
+                        html.Append(
+                            "<p><strong>Confidence:</strong> " +
+                            recommendation.Confidence.ToString("0.00") +
+                            "</p>");
+                    }
+                }
 
                 lblResult.Text =
                     html.ToString();
