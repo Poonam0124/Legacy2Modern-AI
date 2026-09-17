@@ -133,6 +133,7 @@
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="ModernizationAIAnalysis.aspx" />
     <Content Include="ModernizationExport.aspx" />
     <Content Include="ModernizationFindings.aspx" />
     <Content Include="OllamaTest.aspx" />
@@ -261,6 +262,13 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ModernizationAIAnalysis.aspx.cs">
+      <DependentUpon>ModernizationAIAnalysis.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModernizationAIAnalysis.aspx.designer.cs">
+      <DependentUpon>ModernizationAIAnalysis.aspx</DependentUpon>
     </Compile>
     <Compile Include="ModernizationExport.aspx.cs">
       <DependentUpon>ModernizationExport.aspx</DependentUpon>
