@@ -117,7 +117,7 @@ namespace Legacy2Modern.Web
         }
 
         private void DisplayRecommendations(
-    System.Collections.Generic.List<ModernizationRecommendation> recommendations)
+       System.Collections.Generic.List<ModernizationRecommendation> recommendations)
         {
             phRecommendations.Controls.Clear();
 
@@ -142,26 +142,34 @@ namespace Legacy2Modern.Web
 
                 card.CssClass = "recommendation-card";
 
+                // -------------------------------------------------
+                // Header
+                // -------------------------------------------------
+
                 var header =
                     new Panel();
 
                 header.CssClass = "recommendation-header";
 
-                var finding =
+                header.Controls.Add(
                     new LiteralControl(
                         "<h3>Finding " +
-                        Server.HtmlEncode(recommendation.FindingId) +
-                        "</h3>");
-
-                header.Controls.Add(finding);
+                        Server.HtmlEncode(
+                            recommendation.FindingId) +
+                        "</h3>"));
 
                 card.Controls.Add(header);
 
 
+                // -------------------------------------------------
+                // Recommended Action
+                // -------------------------------------------------
+
                 var actionSection =
                     new Panel();
 
-                actionSection.CssClass = "recommendation-item";
+                actionSection.CssClass =
+                    "recommendation-item";
 
                 actionSection.Controls.Add(
                     new LiteralControl(
@@ -177,10 +185,15 @@ namespace Legacy2Modern.Web
                 card.Controls.Add(actionSection);
 
 
+                // -------------------------------------------------
+                // Reasoning
+                // -------------------------------------------------
+
                 var reasoningSection =
                     new Panel();
 
-                reasoningSection.CssClass = "recommendation-item";
+                reasoningSection.CssClass =
+                    "recommendation-item";
 
                 reasoningSection.Controls.Add(
                     new LiteralControl(
@@ -196,10 +209,108 @@ namespace Legacy2Modern.Web
                 card.Controls.Add(reasoningSection);
 
 
+                // -------------------------------------------------
+                // Affected Components
+                // -------------------------------------------------
+
+                var affectedSection =
+                    new Panel();
+
+                affectedSection.CssClass =
+                    "recommendation-subsection";
+
+                affectedSection.Controls.Add(
+                    new LiteralControl(
+                        "<strong>Affected Components</strong>"));
+
+                var affectedList =
+                    new LiteralControl(
+                        "<ul class='recommendation-list'>");
+
+                affectedSection.Controls.Add(
+                    affectedList);
+
+                if (recommendation.AffectedComponents != null &&
+                    recommendation.AffectedComponents.Count > 0)
+                {
+                    foreach (var component
+                        in recommendation.AffectedComponents)
+                    {
+                        affectedSection.Controls.Add(
+                            new LiteralControl(
+                                "<li>" +
+                                Server.HtmlEncode(component) +
+                                "</li>"));
+                    }
+                }
+                else
+                {
+                    affectedSection.Controls.Add(
+                        new LiteralControl(
+                            "<li>No affected components specified.</li>"));
+                }
+
+                affectedSection.Controls.Add(
+                    new LiteralControl(
+                        "</ul>"));
+
+                card.Controls.Add(affectedSection);
+
+
+                // -------------------------------------------------
+                // Implementation Steps
+                // -------------------------------------------------
+
+                var stepsSection =
+                    new Panel();
+
+                stepsSection.CssClass =
+                    "recommendation-subsection";
+
+                stepsSection.Controls.Add(
+                    new LiteralControl(
+                        "<strong>Implementation Steps</strong>"));
+
+                stepsSection.Controls.Add(
+                    new LiteralControl(
+                        "<ol class='recommendation-list'>"));
+
+                if (recommendation.ImplementationSteps != null &&
+                    recommendation.ImplementationSteps.Count > 0)
+                {
+                    foreach (var step
+                        in recommendation.ImplementationSteps)
+                    {
+                        stepsSection.Controls.Add(
+                            new LiteralControl(
+                                "<li>" +
+                                Server.HtmlEncode(step) +
+                                "</li>"));
+                    }
+                }
+                else
+                {
+                    stepsSection.Controls.Add(
+                        new LiteralControl(
+                            "<li>No implementation steps specified.</li>"));
+                }
+
+                stepsSection.Controls.Add(
+                    new LiteralControl(
+                        "</ol>"));
+
+                card.Controls.Add(stepsSection);
+
+
+                // -------------------------------------------------
+                // Metadata
+                // -------------------------------------------------
+
                 var meta =
                     new Panel();
 
-                meta.CssClass = "recommendation-meta";
+                meta.CssClass =
+                    "recommendation-meta";
 
                 meta.Controls.Add(
                     new LiteralControl(
@@ -226,6 +337,10 @@ namespace Legacy2Modern.Web
 
                 card.Controls.Add(meta);
 
+
+                // -------------------------------------------------
+                // Add card to page
+                // -------------------------------------------------
 
                 phRecommendations.Controls.Add(card);
             }

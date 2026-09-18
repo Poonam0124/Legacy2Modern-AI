@@ -141,6 +141,24 @@
         .meta-label {
             font-weight: bold;
         }
+                .recommendation-list {
+            margin: 8px 0 0 0;
+            padding-left: 20px;
+            line-height: 1.6;
+        }
+
+        .recommendation-list li {
+            margin-bottom: 6px;
+        }
+
+        .recommendation-subsection {
+            margin-top: 18px;
+        }
+
+        .recommendation-subsection strong {
+            display: block;
+            margin-bottom: 8px;
+        }
     </style>
 
 </head>
