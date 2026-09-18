@@ -3,7 +3,6 @@
     Inherits="Legacy2Modern.Web.ModernizationAIAnalysis" %>
 
 <!DOCTYPE html>
-
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head runat="server">
@@ -141,26 +140,105 @@
         .meta-label {
             font-weight: bold;
         }
-                .recommendation-list {
+
+        .recommendation-list {
             margin: 8px 0 0 0;
             padding-left: 20px;
             line-height: 1.6;
         }
 
-        .recommendation-list li {
-            margin-bottom: 6px;
-        }
+            .recommendation-list li {
+                margin-bottom: 6px;
+            }
 
         .recommendation-subsection {
             margin-top: 18px;
         }
 
-        .recommendation-subsection strong {
+            .recommendation-subsection strong {
+                display: block;
+                margin-bottom: 8px;
+            }
+
+        .analysis-status {
             display: block;
-            margin-bottom: 8px;
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .status-success {
+            background: #eaf7ea;
+        }
+
+        .status-error {
+            background: #fdeaea;
+        }
+
+        .status-loading {
+            background: #f2f2f2;
+        }
+
+        .recommendation-count {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .btn-primary:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        @media (max-width: 768px) {
+
+            .page-container {
+                margin: 20px auto;
+                padding: 0 12px;
+            }
+
+            .analysis-section {
+                padding: 18px;
+            }
+
+            .recommendation-card {
+                padding: 18px;
+            }
+
+            .recommendation-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
         }
     </style>
+    <script type="text/javascript">
+        function showLoadingState() {
 
+            var button =
+                document.getElementById(
+            '<%= btnRunAnalysis.ClientID %>');
+
+            var status =
+                document.getElementById(
+            '<%= lblRecommendations.ClientID %>');
+
+            if (button) {
+                button.value = "Analyzing...";
+            }
+
+            if (status) {
+                status.className =
+                    "analysis-status status-loading";
+
+                status.innerHTML =
+                    "Analyzing application... " +
+                    "Please wait while the AI evaluates " +
+                    "the modernization findings.";
+            }
+        }
+
+    </script>
 </head>
 
 <body>
@@ -186,12 +264,13 @@
                     runat="server"
                     Text="Run AI Analysis"
                     CssClass="btn-primary"
-                    OnClick="btnRunAnalysis_Click" />
+                    OnClick="btnRunAnalysis_Click"
+                    OnClientClick="showLoadingState();" />
 
                 <asp:Label
                     ID="lblRecommendations"
                     runat="server"
-                    CssClass="status-message" />
+                    CssClass="analysis-status" />
 
             </div>
 

@@ -76,7 +76,8 @@ namespace Legacy2Modern.Web
                         requestBuilder,
                         aiService);
 
-                var response = analysisService.Analyze();
+                var response =
+          analysisService.Analyze();
 
                 lblOverallAssessment.Text =
                     Server.HtmlEncode(
@@ -94,7 +95,14 @@ namespace Legacy2Modern.Web
                     response.Recommendations);
 
                 lblRecommendations.Text =
-                    "AI analysis completed successfully.";
+                    "AI analysis completed successfully. " +
+                    response.Recommendations.Count +
+                    " recommendations generated.";
+
+                lblRecommendations.CssClass =
+                    "analysis-status status-success";
+
+                btnRunAnalysis.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -102,8 +110,7 @@ namespace Legacy2Modern.Web
                     "Unable to complete AI analysis.";
 
                 lblRecommendedApproach.Text =
-                    Server.HtmlEncode(
-                        ex.Message);
+                    string.Empty;
 
                 lblTargetArchitecture.Text =
                     string.Empty;
@@ -111,8 +118,13 @@ namespace Legacy2Modern.Web
                 phRecommendations.Controls.Clear();
 
                 lblRecommendations.Text =
-                    "Please check the AI provider configuration " +
-                    "and try again.";
+                    "AI analysis failed: " +
+                    Server.HtmlEncode(ex.Message);
+
+                lblRecommendations.CssClass =
+                    "analysis-status status-error";
+
+                btnRunAnalysis.Enabled = true;
             }
         }
 
