@@ -305,3 +305,39 @@ Potential AI-assisted capabilities include:
 
 The AI analysis should distinguish between actual detected evidence
 and recommendations or inferred improvements.
+
+## AI Provider Resilience
+
+The modernization analysis layer supports configurable AI provider fallback.
+
+The primary AI provider is configured through the Web application's
+`Web.config`. The current primary provider is Ollama using the configured
+local model.
+
+If the primary provider fails and fallback is enabled, the application
+routes the analysis request to the configured fallback provider.
+
+Current fallback configuration:
+
+- Primary Provider: Ollama
+- Fallback Provider: Mock
+- Fallback Enabled: Configurable through `Web.config`
+
+The provider orchestration layer keeps fallback behavior separate from
+the modernization analysis service.
+
+### Provider Flow
+
+```text
+ModernizationAnalysisService
+        |
+        v
+ModernizationAIService
+        |
+        v
+AIProviderOrchestrator
+       / \
+      /   \
+     v     v
+ Ollama   Mock
+ Primary  Fallback
