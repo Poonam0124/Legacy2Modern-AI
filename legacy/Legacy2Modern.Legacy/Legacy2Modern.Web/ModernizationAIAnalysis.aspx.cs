@@ -32,30 +32,34 @@ namespace Legacy2Modern.Web
                     new ModernizationAIRequestBuilder(
                         promptBuilder);
 
-                var configuration =
-                    new AIProviderConfiguration
+                var configuration = new AIProviderConfiguration
+                {
+                    ProviderName =
+                        System.Configuration.ConfigurationManager
+                            .AppSettings["AIProvider"],
+                                    ModelName =
+                        System.Configuration.ConfigurationManager
+                            .AppSettings["AIModel"],
+                                    Endpoint =
+                        System.Configuration.ConfigurationManager
+                            .AppSettings["AIEndpoint"],
+                                    TimeoutSeconds =
+                        int.Parse(
+                            System.Configuration.ConfigurationManager
+                                .AppSettings["AITimeoutSeconds"])
+                };
+
+                var fallbackConfiguration =
+                    new AIFallbackConfiguration
                     {
+                        Enabled =
+                            bool.Parse(
+                                System.Configuration.ConfigurationManager
+                                    .AppSettings["AIFallbackEnabled"]),
+
                         ProviderName =
-                            System.Configuration
-                                .ConfigurationManager
-                                .AppSettings["AIProvider"],
-
-                        ModelName =
-                            System.Configuration
-                                .ConfigurationManager
-                                .AppSettings["AIModel"],
-
-                        Endpoint =
-                            System.Configuration
-                                .ConfigurationManager
-                                .AppSettings["AIEndpoint"],
-
-                        TimeoutSeconds =
-                            int.Parse(
-                                System.Configuration
-                                    .ConfigurationManager
-                                    .AppSettings[
-                                        "AITimeoutSeconds"])
+                            System.Configuration.ConfigurationManager
+                                .AppSettings["AIFallbackProvider"]
                     };
 
                 var providerFactory =
