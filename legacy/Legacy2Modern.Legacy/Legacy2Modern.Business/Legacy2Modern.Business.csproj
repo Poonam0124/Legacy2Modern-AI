@@ -64,9 +64,11 @@
     <Compile Include="Repositories\IModernizationFindingRepository.cs" />
     <Compile Include="Repositories\ModernizationFindingRepository.cs" />
     <Compile Include="Services\AI\AIProviderFactory.cs" />
+    <Compile Include="Services\AI\AIProviderOrchestrator.cs" />
     <Compile Include="Services\AI\IAIProvider.cs" />
     <Compile Include="Services\AI\IAIProviderFactory.cs" />
     <Compile Include="Services\AI\IAIProviderFallback.cs" />
+    <Compile Include="Services\AI\IAIProviderOrchestrator.cs" />
     <Compile Include="Services\AI\IModernizationAIRequestBuilder.cs" />
     <Compile Include="Services\AI\IModernizationAIResponseParser.cs" />
     <Compile Include="Services\AI\IModernizationAIResponseValidator.cs" />
