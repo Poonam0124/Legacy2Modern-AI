@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Legacy2Modern.Business.Models.AI;
 
 namespace Legacy2Modern.Business.Services.AI
 {
     public class MockModernizationAIService
-        : IAIProvider
+        : IAIProvider,
+          IAIProviderFallback
     {
         public ModernizationAnalysisResponse Analyze(
             ModernizationAnalysisRequest request)
@@ -12,13 +14,13 @@ namespace Legacy2Modern.Business.Services.AI
             return new ModernizationAnalysisResponse
             {
                 OverallAssessment =
-                    "Modernization assessment is ready for AI analysis.",
+                    "Mock AI analysis completed successfully.",
 
                 RecommendedApproach =
-                    "Incremental modernization",
+                    "Use incremental modernization to reduce risk.",
 
                 TargetArchitecture =
-                    "Layered application with clearly separated responsibilities.",
+                    "ASP.NET Core Web API with a modern frontend and SQL Server.",
 
                 Recommendations =
                     new List<ModernizationRecommendation>()
