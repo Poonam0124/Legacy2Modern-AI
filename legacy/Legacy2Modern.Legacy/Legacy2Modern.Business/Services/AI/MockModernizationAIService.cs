@@ -23,7 +23,9 @@ namespace Legacy2Modern.Business.Services.AI
                     "ASP.NET Core Web API with a modern frontend and SQL Server.",
 
                 Recommendations =
-                    new List<ModernizationRecommendation>()
+                    new List<ModernizationRecommendation>(),
+
+                ProviderName = "Mock (Fallback)"
             };
         }
     }

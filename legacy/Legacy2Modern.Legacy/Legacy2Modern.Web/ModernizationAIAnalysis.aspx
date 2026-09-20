@@ -211,6 +211,15 @@
                 gap: 8px;
             }
         }
+
+        .provider-section {
+            margin-bottom: 20px;
+        }
+
+        .provider-name {
+            font-weight: 600;
+            font-size: 16px;
+        }
     </style>
     <script type="text/javascript">
         function showLoadingState() {
@@ -274,7 +283,13 @@
 
             </div>
 
-
+            <div class="section provider-section">
+                <h2>AI Provider</h2>
+                <asp:Label
+                    ID="lblProviderName"
+                    runat="server"
+                    CssClass="provider-name" />
+            </div>
             <div class="analysis-section">
 
                 <h2>Overall Assessment</h2>

@@ -89,6 +89,9 @@ namespace Legacy2Modern.Web
                 var response =
           analysisService.Analyze();
 
+                lblProviderName.Text =
+    Server.HtmlEncode(response.ProviderName);
+
                 lblOverallAssessment.Text =
                     Server.HtmlEncode(
                         response.OverallAssessment);

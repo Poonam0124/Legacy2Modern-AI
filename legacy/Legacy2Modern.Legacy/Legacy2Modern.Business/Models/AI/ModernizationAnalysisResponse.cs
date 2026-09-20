@@ -11,5 +11,7 @@ namespace Legacy2Modern.Business.Models.AI
         public string TargetArchitecture { get; set; }
 
         public List<ModernizationRecommendation> Recommendations { get; set; }
+
+        public string ProviderName { get; set; }
     }
 }

@@ -124,7 +124,7 @@ namespace Legacy2Modern.Business.Services.AI
                     _responseValidator.Validate(
                         analysis,
                         request.Findings);
-
+                    analysis.ProviderName = "Ollama";
                     return analysis;
                 }
             }
