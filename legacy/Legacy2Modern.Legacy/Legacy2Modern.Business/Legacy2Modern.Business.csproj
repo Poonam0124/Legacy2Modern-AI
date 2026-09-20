@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="Models\AI\AIFallbackConfiguration.cs" />
     <Compile Include="Models\AI\AIProviderConfiguration.cs" />
     <Compile Include="Models\AI\ModernizationAnalysisContext.cs" />
     <Compile Include="Models\AI\ModernizationAnalysisRequest.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Services\AI\AIProviderFactory.cs" />
     <Compile Include="Services\AI\IAIProvider.cs" />
     <Compile Include="Services\AI\IAIProviderFactory.cs" />
+    <Compile Include="Services\AI\IAIProviderFallback.cs" />
     <Compile Include="Services\AI\IModernizationAIRequestBuilder.cs" />
     <Compile Include="Services\AI\IModernizationAIResponseParser.cs" />
     <Compile Include="Services\AI\IModernizationAIResponseValidator.cs" />
