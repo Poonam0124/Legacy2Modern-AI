@@ -1,29 +1,21 @@
-﻿using System;
-using Legacy2Modern.Business.Models.AI;
+﻿using Legacy2Modern.Business.Models.AI;
 
 namespace Legacy2Modern.Business.Services.AI
 {
-    public class ModernizationAIService
-        : IModernizationAIService
+    public class ModernizationAIService : IModernizationAIService
     {
-        private readonly IAIProvider _provider;
+        private readonly IAIProviderOrchestrator _orchestrator;
 
         public ModernizationAIService(
-            IAIProvider provider)
+            IAIProviderOrchestrator orchestrator)
         {
-            if (provider == null)
-                throw new ArgumentNullException("provider");
-
-            _provider = provider;
+            _orchestrator = orchestrator;
         }
 
         public ModernizationAnalysisResponse Analyze(
             ModernizationAnalysisRequest request)
         {
-            if (request == null)
-                throw new ArgumentNullException("request");
-
-            return _provider.Analyze(request);
+            return _orchestrator.Analyze(request);
         }
     }
 }

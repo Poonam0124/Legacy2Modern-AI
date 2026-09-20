@@ -62,16 +62,22 @@ namespace Legacy2Modern.Web
                                 .AppSettings["AIFallbackProvider"]
                     };
 
-                var providerFactory =
-                    new AIProviderFactory();
+                var providerFactory = new AIProviderFactory();
 
-                var provider =
-                    providerFactory.Create(
-                        configuration);
+                var primaryProvider =
+                    providerFactory.Create(configuration);
+
+                var fallbackProvider =
+                    new MockModernizationAIService();
+
+                var orchestrator =
+                    new AIProviderOrchestrator(
+                        primaryProvider,
+                        fallbackProvider,
+                        fallbackConfiguration);
 
                 var aiService =
-                    new ModernizationAIService(
-                        provider);
+                    new ModernizationAIService(orchestrator);
 
                 var analysisService =
                     new ModernizationAnalysisService(

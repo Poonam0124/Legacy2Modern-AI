@@ -45,17 +45,34 @@ namespace Legacy2Modern.Web
                                 ConfigurationManager.AppSettings[
                                     "AITimeoutSeconds"])
                     };
+                var fallbackConfiguration =
+                   new AIFallbackConfiguration
+                   {
+                       Enabled =
+                           bool.Parse(
+                               System.Configuration.ConfigurationManager
+                                   .AppSettings["AIFallbackEnabled"]),
 
-                var providerFactory =
-                    new AIProviderFactory();
+                       ProviderName =
+                           System.Configuration.ConfigurationManager
+                               .AppSettings["AIFallbackProvider"]
+                   };
+                var providerFactory = new AIProviderFactory();
 
-                var provider =
-                    providerFactory.Create(
-                        configuration);
+                var primaryProvider =
+                    providerFactory.Create(configuration);
+
+                var fallbackProvider =
+                    new MockModernizationAIService();
+
+                var orchestrator =
+                    new AIProviderOrchestrator(
+                        primaryProvider,
+                        fallbackProvider,
+                        fallbackConfiguration);
 
                 var aiService =
-                    new ModernizationAIService(
-                        provider);
+                    new ModernizationAIService(orchestrator);
 
                 var analysisService =
                     new ModernizationAnalysisService(
