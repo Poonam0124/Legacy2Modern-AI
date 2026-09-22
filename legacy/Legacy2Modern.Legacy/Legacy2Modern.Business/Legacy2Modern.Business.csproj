@@ -82,6 +82,7 @@
     <Compile Include="Services\AI\IModernizationAnalysisService.cs" />
     <Compile Include="Services\AI\IModernizationPlanningPromptBuilder.cs" />
     <Compile Include="Services\AI\IModernizationPlanningRequestBuilder.cs" />
+    <Compile Include="Services\AI\IModernizationPlanningService.cs" />
     <Compile Include="Services\AI\IModernizationPromptBuilder.cs" />
     <Compile Include="Services\AI\MockModernizationAIService.cs" />
     <Compile Include="Services\AI\ModernizationAIRequestBuilder.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Services\AI\ModernizationAnalysisService.cs" />
     <Compile Include="Services\AI\ModernizationPlanningPromptBuilder.cs" />
     <Compile Include="Services\AI\ModernizationPlanningRequestBuilder.cs" />
+    <Compile Include="Services\AI\ModernizationPlanningService.cs" />
     <Compile Include="Services\AI\ModernizationPromptBuilder.cs" />
     <Compile Include="Services\AI\OllamaAIProvider.cs" />
     <Compile Include="Services\CustomerService.cs" />
