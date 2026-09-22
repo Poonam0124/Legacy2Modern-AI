@@ -52,6 +52,9 @@
     <Compile Include="Models\AI\ModernizationAnalysisResponse.cs" />
     <Compile Include="Models\AI\ModernizationPlan.cs" />
     <Compile Include="Models\AI\ModernizationPlanItem.cs" />
+    <Compile Include="Models\AI\ModernizationPlanningContext.cs" />
+    <Compile Include="Models\AI\ModernizationPlanningRequest.cs" />
+    <Compile Include="Models\AI\ModernizationPlanningResponse.cs" />
     <Compile Include="Models\AI\ModernizationPlanPhase.cs" />
     <Compile Include="Models\AI\ModernizationPrompt.cs" />
     <Compile Include="Models\AI\ModernizationRecommendation.cs" />
