@@ -70,9 +70,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IModernizationFindingRepository.cs" />
     <Compile Include="Repositories\ModernizationFindingRepository.cs" />
+    <Compile Include="Services\AI\AIPlanningProviderFactory.cs" />
     <Compile Include="Services\AI\AIProviderFactory.cs" />
     <Compile Include="Services\AI\AIProviderOrchestrator.cs" />
     <Compile Include="Services\AI\IAIPlanningProvider.cs" />
+    <Compile Include="Services\AI\IAIPlanningProviderFactory.cs" />
     <Compile Include="Services\AI\IAIProvider.cs" />
     <Compile Include="Services\AI\IAIProviderFactory.cs" />
     <Compile Include="Services\AI\IAIProviderFallback.cs" />
