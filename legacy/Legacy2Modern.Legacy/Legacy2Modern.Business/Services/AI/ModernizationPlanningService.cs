@@ -7,14 +7,14 @@ namespace Legacy2Modern.Business.Services.AI
         : IModernizationPlanningService
     {
         private readonly IModernizationPlanningRequestBuilder _requestBuilder;
-        private readonly IModernizationAIService _aiService;
+        private readonly IAIPlanningProvider _planningProvider;
 
         public ModernizationPlanningService(
             IModernizationPlanningRequestBuilder requestBuilder,
-            IModernizationAIService aiService)
+            IAIPlanningProvider planningProvider)
         {
             _requestBuilder = requestBuilder;
-            _aiService = aiService;
+            _planningProvider = planningProvider;
         }
 
         public ModernizationPlanningResponse CreatePlan(
@@ -23,56 +23,19 @@ namespace Legacy2Modern.Business.Services.AI
             if (context == null)
                 throw new ArgumentNullException("context");
 
-            var request = _requestBuilder.Build(context);
+            var request =
+                _requestBuilder.Build(context);
 
-            var analysisResponse =
-                _aiService.Analyze(
-                    new ModernizationAnalysisRequest
-                    {
-                        ApplicationName =
-                            request.ApplicationName,
+            var response =
+                _planningProvider.CreatePlan(request);
 
-                        TechnologyStack =
-                            request.TechnologyStack,
-
-                        Findings =
-                            request.Findings,
-
-                        Prompt =
-                            request.Prompt
-                    });
-
-            return ConvertToPlanningResponse(
-                analysisResponse);
-        }
-
-        private ModernizationPlanningResponse ConvertToPlanningResponse(
-            ModernizationAnalysisResponse response)
-        {
             if (response == null)
-                throw new InvalidOperationException(
-                    "AI planning response was empty.");
-
-            return new ModernizationPlanningResponse
             {
-                Plan = new ModernizationPlan
-                {
-                    PlanTitle =
-                        "Legacy2Modern-AI Modernization Plan",
+                throw new InvalidOperationException(
+                    "AI planning provider returned an empty response.");
+            }
 
-                    OverallStrategy =
-                        response.OverallAssessment,
-
-                    TargetArchitecture =
-                        response.TargetArchitecture,
-
-                    Phases =
-                        new System.Collections.Generic.List<ModernizationPlanPhase>(),
-
-                    Items =
-                        new System.Collections.Generic.List<ModernizationPlanItem>()
-                }
-            };
+            return response;
         }
     }
 }
