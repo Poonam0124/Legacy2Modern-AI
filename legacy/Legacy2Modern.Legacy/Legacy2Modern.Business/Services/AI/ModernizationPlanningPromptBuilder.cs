@@ -133,7 +133,98 @@ namespace Legacy2Modern.Business.Services.AI
             userInstruction.AppendLine(
                 "Consider the existing ASP.NET Web Forms application " +
                 "and its current technology stack when creating the plan.");
+            userInstruction.AppendLine();
 
+            userInstruction.AppendLine(
+                "Return the modernization plan as JSON only.");
+
+            userInstruction.AppendLine(
+                "Do not return Markdown.");
+
+            userInstruction.AppendLine(
+                "Do not use code fences.");
+
+            userInstruction.AppendLine(
+                "Do not include explanations before or after the JSON.");
+
+            userInstruction.AppendLine(
+                "The response must contain exactly one JSON object.");
+
+            userInstruction.AppendLine(
+                "IMPORTANT: The top-level JSON object must contain exactly one property named \"Plan\".");
+
+            userInstruction.AppendLine(
+                "The value of \"Plan\" MUST be a JSON object, never an array.");
+
+            userInstruction.AppendLine(
+                "Do not put phases directly inside \"Plan\".");
+
+            userInstruction.AppendLine(
+                "Do not use \"Plan\" as an array.");
+
+            userInstruction.AppendLine(
+                "Do not use alternative structures such as { \"Plan\": [ ... ] }.");
+
+            userInstruction.AppendLine(
+                "The \"Plan\" object must contain PlanTitle, OverallStrategy, TargetArchitecture, Phases, and Items.");
+
+            userInstruction.AppendLine(
+                "The \"Phases\" property must be an array.");
+
+            userInstruction.AppendLine(
+                "The \"Items\" property must be an array.");
+
+            userInstruction.AppendLine(
+                "Every item in Items must contain all fields specified in the schema.");
+
+            userInstruction.AppendLine(
+                "Use the following JSON structure:");
+
+            userInstruction.AppendLine(@"
+                {
+                  ""Plan"": {
+                    ""PlanTitle"": ""string"",
+                    ""OverallStrategy"": ""string"",
+                    ""TargetArchitecture"": ""string"",
+                    ""Phases"": [
+                      {
+                        ""PhaseNumber"": 1,
+                        ""PhaseName"": ""string"",
+                        ""Objective"": ""string"",
+                        ""Rationale"": ""string""
+                      }
+                    ],
+                    ""Items"": [
+                      {
+                        ""PlanItemId"": ""string"",
+                        ""PhaseNumber"": 1,
+                        ""FindingId"": ""string"",
+                        ""Title"": ""string"",
+                        ""RecommendedAction"": ""string"",
+                        ""Reasoning"": ""string"",
+                        ""Priority"": ""string"",
+                        ""Risk"": ""string"",
+                        ""Complexity"": ""string"",
+                        ""Effort"": ""string"",
+                        ""Dependencies"": [""string""],
+                        ""AffectedComponents"": [""string""],
+                        ""ImplementationSteps"": [""string""]
+                      }
+                    ]
+                  }
+                }");
+
+            userInstruction.AppendLine(
+                "Every plan item must reference one of the supplied Finding IDs.");
+
+            userInstruction.AppendLine(
+                "Do not invent Finding IDs.");
+
+            userInstruction.AppendLine(
+                "Return valid JSON that can be parsed directly by Newtonsoft.Json.");
+
+            userInstruction.AppendLine(
+                "Do not include ProviderName. The application will assign the AI provider.");
             return new ModernizationPrompt
             {
                 SystemInstruction = systemInstruction,

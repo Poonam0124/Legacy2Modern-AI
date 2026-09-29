@@ -136,6 +136,7 @@
     <Content Include="ModernizationAIAnalysis.aspx" />
     <Content Include="ModernizationExport.aspx" />
     <Content Include="ModernizationFindings.aspx" />
+    <Content Include="ModernizationPlanningTest.aspx" />
     <Content Include="OllamaTest.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -283,6 +284,13 @@
     </Compile>
     <Compile Include="ModernizationFindings.aspx.designer.cs">
       <DependentUpon>ModernizationFindings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ModernizationPlanningTest.aspx.cs">
+      <DependentUpon>ModernizationPlanningTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModernizationPlanningTest.aspx.designer.cs">
+      <DependentUpon>ModernizationPlanningTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="OllamaTest.aspx.cs">
       <DependentUpon>OllamaTest.aspx</DependentUpon>
