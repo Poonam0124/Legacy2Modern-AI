@@ -53,6 +53,7 @@
     <Compile Include="Models\AI\ModernizationDependency.cs" />
     <Compile Include="Models\AI\ModernizationDependencyImpactAnalysis.cs" />
     <Compile Include="Models\AI\ModernizationDependencyImpactContext.cs" />
+    <Compile Include="Models\AI\ModernizationDependencyImpactRequest.cs" />
     <Compile Include="Models\AI\ModernizationImpact.cs" />
     <Compile Include="Models\AI\ModernizationPlan.cs" />
     <Compile Include="Models\AI\ModernizationPlanItem.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Services\AI\IModernizationAIService.cs" />
     <Compile Include="Services\AI\IModernizationAnalysisService.cs" />
     <Compile Include="Services\AI\IModernizationDependencyImpactPromptBuilder.cs" />
+    <Compile Include="Services\AI\IModernizationDependencyImpactRequestBuilder.cs" />
     <Compile Include="Services\AI\IModernizationPlanningPromptBuilder.cs" />
     <Compile Include="Services\AI\IModernizationPlanningRequestBuilder.cs" />
     <Compile Include="Services\AI\IModernizationPlanningResponseParser.cs" />
@@ -103,6 +105,7 @@
     <Compile Include="Services\AI\ModernizationAIService.cs" />
     <Compile Include="Services\AI\ModernizationAnalysisService.cs" />
     <Compile Include="Services\AI\ModernizationDependencyImpactPromptBuilder.cs" />
+    <Compile Include="Services\AI\ModernizationDependencyImpactRequestBuilder.cs" />
     <Compile Include="Services\AI\ModernizationPlanningPromptBuilder.cs" />
     <Compile Include="Services\AI\ModernizationPlanningRequestBuilder.cs" />
     <Compile Include="Services\AI\ModernizationPlanningResponseParser.cs" />
