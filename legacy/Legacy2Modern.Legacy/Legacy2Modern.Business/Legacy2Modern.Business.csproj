@@ -78,6 +78,7 @@
     <Compile Include="Services\AI\AIPlanningProviderFactory.cs" />
     <Compile Include="Services\AI\AIProviderFactory.cs" />
     <Compile Include="Services\AI\AIProviderOrchestrator.cs" />
+    <Compile Include="Services\AI\IAIDependencyImpactProvider.cs" />
     <Compile Include="Services\AI\IAIPlanningProvider.cs" />
     <Compile Include="Services\AI\IAIPlanningProviderFactory.cs" />
     <Compile Include="Services\AI\IAIProvider.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Services\AI\IModernizationAIResponseValidator.cs" />
     <Compile Include="Services\AI\IModernizationAIService.cs" />
     <Compile Include="Services\AI\IModernizationAnalysisService.cs" />
+    <Compile Include="Services\AI\IModernizationDependencyImpactAnalysisService.cs" />
     <Compile Include="Services\AI\IModernizationDependencyImpactPromptBuilder.cs" />
     <Compile Include="Services\AI\IModernizationDependencyImpactRequestBuilder.cs" />
     <Compile Include="Services\AI\IModernizationPlanningPromptBuilder.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="Services\AI\ModernizationAIResponseValidator.cs" />
     <Compile Include="Services\AI\ModernizationAIService.cs" />
     <Compile Include="Services\AI\ModernizationAnalysisService.cs" />
+    <Compile Include="Services\AI\ModernizationDependencyImpactAnalysisService.cs" />
     <Compile Include="Services\AI\ModernizationDependencyImpactPromptBuilder.cs" />
     <Compile Include="Services\AI\ModernizationDependencyImpactRequestBuilder.cs" />
     <Compile Include="Services\AI\ModernizationPlanningPromptBuilder.cs" />
