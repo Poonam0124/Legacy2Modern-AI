@@ -121,6 +121,7 @@
     <Compile Include="Services\AI\ModernizationPlanningService.cs" />
     <Compile Include="Services\AI\ModernizationPromptBuilder.cs" />
     <Compile Include="Services\AI\OllamaAIProvider.cs" />
+    <Compile Include="Services\AI\OllamaDependencyImpactProvider.cs" />
     <Compile Include="Services\AI\OllamaPlanningAIProvider.cs" />
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\LegacyWorkflowRules.cs" />
