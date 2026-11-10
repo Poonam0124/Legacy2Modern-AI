@@ -43,6 +43,7 @@ namespace Legacy2Modern.Business.Services.AI
                 prompt = request.Prompt.UserInstruction,
                 system = request.Prompt.SystemInstruction,
                 stream = false,
+                think = false,
                 format = new
                 {
                     type = "object",

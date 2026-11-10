@@ -61,6 +61,8 @@ namespace Legacy2Modern.Business.Services.AI
 
                 stream = false,
 
+                think = false,
+
                 format = new
                 {
                     type = "object",

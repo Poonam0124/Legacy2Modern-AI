@@ -208,6 +208,95 @@ namespace Legacy2Modern.Business.Services.AI
             };
         }
 
+        public ModernizationDependencyImpactValidationResult Validate(
+    ModernizationDependencyImpactAnalysis analysis,
+    ModernizationDependencyImpactContext context)
+        {
+            var basicValidation = Validate(analysis);
+
+            if (!basicValidation.IsValid)
+            {
+                return basicValidation;
+            }
+
+            if (context == null)
+            {
+                return Invalid(
+                    "Dependency and impact analysis context is required.");
+            }
+
+            if (context.Plan == null ||
+                context.Plan.Items == null)
+            {
+                return Invalid(
+                    "Modernization plan items are required for validation.");
+            }
+
+            if (context.Findings == null)
+            {
+                return Invalid(
+                    "Modernization findings are required for validation.");
+            }
+
+            var planItemIds = new HashSet<string>(
+                context.Plan.Items
+                    .Where(x => x != null)
+                    .Select(x => x.PlanItemId),
+                StringComparer.OrdinalIgnoreCase);
+
+            var findingIds = new HashSet<string>(
+                context.Findings
+                    .Where(x => x != null)
+                    .Select(x => x.Id),
+                StringComparer.OrdinalIgnoreCase);
+
+            foreach (var dependency in analysis.Dependencies)
+            {
+                if (!planItemIds.Contains(dependency.SourceId))
+                {
+                    return Invalid(
+                        "Dependency '" + dependency.DependencyId +
+                        "' references an unknown source plan item: " +
+                        dependency.SourceId);
+                }
+
+                if (!planItemIds.Contains(dependency.TargetId))
+                {
+                    return Invalid(
+                        "Dependency '" + dependency.DependencyId +
+                        "' references an unknown target plan item: " +
+                        dependency.TargetId);
+                }
+
+                if (string.Equals(
+                    dependency.SourceId,
+                    dependency.TargetId,
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    return Invalid(
+                        "Dependency '" + dependency.DependencyId +
+                        "' cannot depend on itself.");
+                }
+            }
+
+            foreach (var impact in analysis.Impacts)
+            {
+                if (!findingIds.Contains(impact.FindingId))
+                {
+                    return Invalid(
+                        "Impact '" + impact.ImpactId +
+                        "' references an unknown finding: " +
+                        impact.FindingId);
+                }
+            }
+
+            return new ModernizationDependencyImpactValidationResult
+            {
+                IsValid = true,
+                ErrorMessage = null
+            };
+        }
+
         private ModernizationDependencyImpactValidationResult Invalid(
             string message)
         {

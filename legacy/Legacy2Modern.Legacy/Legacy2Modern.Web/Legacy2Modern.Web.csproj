@@ -134,6 +134,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="ModernizationAIAnalysis.aspx" />
+    <Content Include="ModernizationDependencyImpactTest.aspx" />
     <Content Include="ModernizationExport.aspx" />
     <Content Include="ModernizationFindings.aspx" />
     <Content Include="ModernizationPlanningTest.aspx" />
@@ -270,6 +271,13 @@
     </Compile>
     <Compile Include="ModernizationAIAnalysis.aspx.designer.cs">
       <DependentUpon>ModernizationAIAnalysis.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ModernizationDependencyImpactTest.aspx.cs">
+      <DependentUpon>ModernizationDependencyImpactTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ModernizationDependencyImpactTest.aspx.designer.cs">
+      <DependentUpon>ModernizationDependencyImpactTest.aspx</DependentUpon>
     </Compile>
     <Compile Include="ModernizationExport.aspx.cs">
       <DependentUpon>ModernizationExport.aspx</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Text;
 using Legacy2Modern.Business.Models.AI;
 
@@ -35,25 +36,32 @@ namespace Legacy2Modern.Business.Services.AI
                     "Modernization plan is required.");
             }
 
-            var systemInstruction =
-                "You are a software modernization dependency and impact " +
-                "analysis architect. Analyze a legacy application's " +
-                "modernization findings, recommendations, and execution " +
-                "plan. Identify meaningful dependencies between " +
-                "modernization activities and assess their potential impact " +
-                "on application components. Be conservative and do not " +
-                "invent unsupported dependencies or components.";
+            if (context.Plan.Items == null ||
+                context.Plan.Items.Count == 0)
+            {
+                throw new InvalidOperationException(
+                    "Modernization plan items are required.");
+            }
 
-            var userInstruction =
-                new StringBuilder();
+            var systemInstruction =
+                "You are a conservative software modernization " +
+                "dependency and impact analysis architect. Analyze only " +
+                "the supplied findings, recommendations, plan items, " +
+                "phases, and application information. Evidence and " +
+                "traceability are more important than producing many " +
+                "dependencies. Never invent findings, plan items, " +
+                "components, configuration changes, or architectural " +
+                "decisions. If evidence is insufficient, omit the " +
+                "dependency rather than speculate.";
+
+            var userInstruction = new StringBuilder();
 
             userInstruction.AppendLine(
-                "Analyze the modernization dependencies and impacts " +
-                "for the following application.");
+                "Analyze the dependencies and impacts of the supplied " +
+                "modernization activities.");
             userInstruction.AppendLine();
 
-            userInstruction.AppendLine(
-                "Application:");
+            userInstruction.AppendLine("APPLICATION");
             userInstruction.AppendLine(
                 "Name: " + context.ApplicationName);
             userInstruction.AppendLine(
@@ -64,8 +72,7 @@ namespace Legacy2Modern.Business.Services.AI
                 "Modernization Goal: " + context.ModernizationGoal);
             userInstruction.AppendLine();
 
-            userInstruction.AppendLine(
-                "Modernization Findings:");
+            userInstruction.AppendLine("MODERNIZATION FINDINGS");
 
             foreach (var finding in context.Findings)
             {
@@ -75,6 +82,8 @@ namespace Legacy2Modern.Business.Services.AI
                     "  Title: " + finding.Title);
                 userInstruction.AppendLine(
                     "  Description: " + finding.Description);
+                userInstruction.AppendLine(
+                    "  Evidence: " + finding.Evidence);
                 userInstruction.AppendLine(
                     "  Category: " + finding.Category);
                 userInstruction.AppendLine(
@@ -94,9 +103,7 @@ namespace Legacy2Modern.Business.Services.AI
             }
 
             userInstruction.AppendLine();
-
-            userInstruction.AppendLine(
-                "Modernization Recommendations:");
+            userInstruction.AppendLine("AI RECOMMENDATIONS");
 
             foreach (var recommendation in context.Recommendations)
             {
@@ -106,8 +113,7 @@ namespace Legacy2Modern.Business.Services.AI
                     "  Recommended Action: " +
                     recommendation.RecommendedAction);
                 userInstruction.AppendLine(
-                    "  Reasoning: " +
-                    recommendation.Reasoning);
+                    "  Reasoning: " + recommendation.Reasoning);
                 userInstruction.AppendLine(
                     "  Risk: " + recommendation.Risk);
                 userInstruction.AppendLine(
@@ -115,39 +121,35 @@ namespace Legacy2Modern.Business.Services.AI
             }
 
             userInstruction.AppendLine();
-
-            userInstruction.AppendLine(
-                "Modernization Plan:");
+            userInstruction.AppendLine("MODERNIZATION PLAN");
 
             userInstruction.AppendLine(
                 "Plan Title: " + context.Plan.PlanTitle);
             userInstruction.AppendLine(
-                "Overall Strategy: " +
-                context.Plan.OverallStrategy);
+                "Overall Strategy: " + context.Plan.OverallStrategy);
             userInstruction.AppendLine(
                 "Target Architecture: " +
                 context.Plan.TargetArchitecture);
 
             userInstruction.AppendLine();
+            userInstruction.AppendLine("PLAN PHASES");
 
-            userInstruction.AppendLine(
-                "Plan Phases:");
-
-            foreach (var phase in context.Plan.Phases)
+            if (context.Plan.Phases != null)
             {
-                userInstruction.AppendLine(
-                    "- Phase " + phase.PhaseNumber +
-                    ": " + phase.PhaseName);
-                userInstruction.AppendLine(
-                    "  Objective: " + phase.Objective);
-                userInstruction.AppendLine(
-                    "  Rationale: " + phase.Rationale);
+                foreach (var phase in context.Plan.Phases)
+                {
+                    userInstruction.AppendLine(
+                        "- Phase " + phase.PhaseNumber +
+                        ": " + phase.PhaseName);
+                    userInstruction.AppendLine(
+                        "  Objective: " + phase.Objective);
+                    userInstruction.AppendLine(
+                        "  Rationale: " + phase.Rationale);
+                }
             }
 
             userInstruction.AppendLine();
-
-            userInstruction.AppendLine(
-                "Plan Items:");
+            userInstruction.AppendLine("PLAN ITEMS");
 
             foreach (var item in context.Plan.Items)
             {
@@ -160,8 +162,7 @@ namespace Legacy2Modern.Business.Services.AI
                 userInstruction.AppendLine(
                     "  Title: " + item.Title);
                 userInstruction.AppendLine(
-                    "  Recommended Action: " +
-                    item.RecommendedAction);
+                    "  Recommended Action: " + item.RecommendedAction);
                 userInstruction.AppendLine(
                     "  Dependencies: " +
                     string.Join(", ", item.Dependencies ??
@@ -170,72 +171,98 @@ namespace Legacy2Modern.Business.Services.AI
                     "  Affected Components: " +
                     string.Join(", ", item.AffectedComponents ??
                         new System.Collections.Generic.List<string>()));
+                userInstruction.AppendLine(
+                    "  Implementation Steps: " +
+                    string.Join(", ", item.ImplementationSteps ??
+                        new System.Collections.Generic.List<string>()));
             }
 
             userInstruction.AppendLine();
+            userInstruction.AppendLine("DEPENDENCY REQUIREMENTS");
 
             userInstruction.AppendLine(
-                "Dependency analysis requirements:");
-
+                "1. SourceId must identify the prerequisite plan item.");
             userInstruction.AppendLine(
-                "1. Identify meaningful dependencies between " +
-                "modernization findings or plan items.");
-
+                "2. TargetId must identify the plan item that depends " +
+                "on that prerequisite.");
             userInstruction.AppendLine(
-                "2. Identify which modernization activity should occur " +
-                "before another activity when a dependency exists.");
-
+                "3. Both SourceId and TargetId must exactly match " +
+                "Plan Item IDs listed above.");
             userInstruction.AppendLine(
-                "3. Explain why the dependency exists.");
-
+                "4. Never use Finding IDs, phase IDs, milestone labels, " +
+                "or invented IDs as dependency endpoints.");
             userInstruction.AppendLine(
-                "4. Identify the impact of each dependency.");
-
+                "5. Explain the specific evidence showing why the " +
+                "target activity depends on the source activity.");
             userInstruction.AppendLine(
-                "5. Do not create dependencies merely because two " +
-                "activities are related.");
-
+                "6. Existing item dependencies and phase ordering may " +
+                "provide evidence, but do not assume a dependency " +
+                "exists merely because one item appears earlier.");
             userInstruction.AppendLine(
-                "6. Use only Finding IDs and Plan Item IDs supplied " +
-                "in the input.");
-
+                "7. Do not reverse prerequisite direction.");
             userInstruction.AppendLine(
-                "7. Do not invent application components.");
-
+                "8. SourceId and TargetId must always be different. " +
+                "Never create a dependency from a plan item to itself.");
+            userInstruction.AppendLine(
+                "9. Do not create circular dependencies.");
+            userInstruction.AppendLine(
+                "10. Do not invent prerequisites such as migrating to " +
+                "appsettings.json, introducing a new service, or " +
+                "changing configuration unless explicitly supported " +
+                "by the supplied findings or plan.");
+            userInstruction.AppendLine(
+                "11. If no meaningful dependency is supported, return " +
+                "an empty Dependencies array.");
+            userInstruction.AppendLine(
+                "12. Keep descriptions specific to the actual activities.");
             userInstruction.AppendLine();
 
-            userInstruction.AppendLine(
-                "Impact analysis requirements:");
+            userInstruction.AppendLine("IMPACT REQUIREMENTS");
 
             userInstruction.AppendLine(
-                "1. Identify the affected application components.");
-
+                "1. FindingId must exactly match an ID from the " +
+                "supplied Modernization Findings.");
             userInstruction.AppendLine(
-                "2. Identify the impact area.");
-
+                "2. Identify a concrete impact on the application, " +
+                "its behavior, maintainability, reliability, security, " +
+                "or delivery.");
             userInstruction.AppendLine(
-                "3. Classify the impact level.");
-
+                "3. AffectedComponents must contain only components " +
+                "supported by the supplied evidence.");
             userInstruction.AppendLine(
-                "4. Identify realistic risks.");
-
+                "4. Risks must describe plausible failure modes or " +
+                "negative consequences, not generic statements.");
             userInstruction.AppendLine(
-                "5. Provide practical mitigation strategies.");
-
+                "5. Mitigations must explain practical actions that " +
+                "reduce the identified risks.");
             userInstruction.AppendLine(
-                "6. Base the analysis only on the supplied " +
-                "application information.");
-
+                "6. Explain why the impact level is appropriate.");
+            userInstruction.AppendLine(
+                "7. Avoid repetitive or generic impacts. Each impact " +
+                "must provide distinct, useful information.");
+            userInstruction.AppendLine(
+                "8. Do not claim that an implementation already exists " +
+                "unless the supplied context establishes that fact.");
             userInstruction.AppendLine();
 
+            userInstruction.AppendLine("OUTPUT RULES");
+
             userInstruction.AppendLine(
-                "Return the analysis as JSON only.");
+                "Return one JSON object matching the required schema.");
             userInstruction.AppendLine(
-                "Do not return Markdown.");
+                "Include AnalysisTitle, OverallAssessment, Dependencies, " +
+                "and Impacts.");
             userInstruction.AppendLine(
-                "Do not use code fences.");
+                "Every dependency must include DependencyId, SourceId, " +
+                "TargetId, DependencyType, Description, Impact, " +
+                "AffectedComponents, and Reasons.");
             userInstruction.AppendLine(
-                "Do not include explanations before or after the JSON.");
+                "Every impact must include ImpactId, FindingId, " +
+                "ImpactArea, ImpactLevel, Description, " +
+                "AffectedComponents, Risks, and Mitigations.");
+            userInstruction.AppendLine(
+                "Return JSON only. Do not include Markdown, code fences, " +
+                "or explanatory text outside the JSON.");
 
             return new ModernizationPrompt
             {

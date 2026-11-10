@@ -6,5 +6,8 @@ namespace Legacy2Modern.Business.Services.AI
     {
         ModernizationDependencyImpactValidationResult Validate(
             ModernizationDependencyImpactAnalysis analysis);
+        ModernizationDependencyImpactValidationResult Validate(
+           ModernizationDependencyImpactAnalysis analysis,
+           ModernizationDependencyImpactContext context);
     }
 }
