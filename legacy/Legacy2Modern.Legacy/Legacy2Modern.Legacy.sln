@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legacy2Modern.Business", "L
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legacy2Modern.Data", "Legacy2Modern.Data\Legacy2Modern.Data.csproj", "{2057C489-6DB8-4CB4-9F33-597A92AD3E65}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Legacy2Modern.Business.Tests", "..\..\tests\Legacy2Modern.Business.Tests\Legacy2Modern.Business.Tests.csproj", "{3ABB28AB-D0A4-4BD6-837D-21D601D8932E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{2057C489-6DB8-4CB4-9F33-597A92AD3E65}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2057C489-6DB8-4CB4-9F33-597A92AD3E65}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2057C489-6DB8-4CB4-9F33-597A92AD3E65}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3ABB28AB-D0A4-4BD6-837D-21D601D8932E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3ABB28AB-D0A4-4BD6-837D-21D601D8932E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3ABB28AB-D0A4-4BD6-837D-21D601D8932E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3ABB28AB-D0A4-4BD6-837D-21D601D8932E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -35,3 +41,4 @@ Global
 		SolutionGuid = {6E0EDDBA-7092-4234-B4F1-2E45E7FB74DF}
 	EndGlobalSection
 EndGlobal
+
