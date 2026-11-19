@@ -2,174 +2,230 @@
 
 **AI-Assisted Legacy .NET Application Modernization**
 
-Legacy2Modern-AI is a portfolio project that explores how AI can assist developers in understanding, analyzing, and planning the modernization of legacy .NET applications.
+Legacy2Modern-AI is a portfolio project exploring how AI can help developers understand legacy .NET applications, identify modernization opportunities, and plan changes in a structured, incremental way.
 
-The project uses a legacy ASP.NET Web Forms application as its modernization baseline. It analyzes existing modernization findings and builds structured recommendations, modernization plans, dependency relationships, and impact assessments to help developers make informed modernization decisions.
+The project uses a sample enterprise application built with ASP.NET Web Forms and .NET Framework 4.8 as its legacy baseline. It combines modernization findings, AI-assisted recommendations, phased planning, and dependency-and-impact analysis to support more informed modernization decisions.
 
-The goal is to demonstrate a practical approach to legacy application modernization while preserving existing business functionality and reducing migration risks.
-
-## Project Goals
-
-- Identify architectural and maintainability concerns in legacy applications.
-- Generate structured modernization recommendations from existing findings.
-- Develop phased modernization plans.
-- Analyze dependencies between modernization plan items.
-- Assess the potential impacts, risks, and mitigations associated with modernization findings.
-- Integrate AI providers through a layered architecture with response validation and fallback handling.
-- Explore incremental modernization rather than relying on a complete application rewrite.
+Rather than treating modernization as a complete rewrite, the project focuses on understanding existing business behavior, identifying architectural risks, validating analysis results, and organizing modernization work into actionable steps.
 
 ## Key Features
 
-### 1. Legacy Application Analysis
+### 1. Legacy Application Baseline
 
-The project includes a sample enterprise application built with legacy Microsoft .NET technologies.
+A sample customer and service-request management application provides a realistic starting point for modernization analysis.
 
-The application provides a realistic baseline for identifying modernization opportunities, including:
+The legacy application includes:
 
-- Hard-coded workflow rules.
-- Scattered business status representations.
-- Direct dependencies between the presentation and data layers.
-- Environment-specific configuration.
-- Business validation responsibilities spread across layers.
+- ASP.NET Web Forms and C#
+- .NET Framework 4.8
+- Entity Framework 6 with EDMX / Database First
+- Microsoft SQL Server / LocalDB
+- Business and data layers using service and repository patterns
 
-### 2. AI-Assisted Modernization Recommendations
+The baseline intentionally retains architectural concerns that can be investigated and addressed through future modernization work.
 
-The modernization workflow uses existing findings as input for structured analysis and recommendations.
+### 2. AI-Assisted Modernization Analysis
 
-The design separates analysis context, prompt construction, AI request construction, provider integration, response parsing, and validation.
+The analysis workflow uses existing findings and application context to generate structured modernization recommendations.
 
-### 3. Modernization Planning
+Its architecture separates responsibilities such as:
 
-The planning workflow produces a structured modernization plan containing phases and actionable plan items.
+- Analysis orchestration
+- Prompt construction
+- AI request construction
+- Provider integration
+- Response parsing and validation
+- Results presentation
 
-Each plan item can include its priority, risk, complexity, estimated effort, dependencies, affected components, reasoning, and implementation steps.
+This separation helps keep the workflow maintainable and testable as requirements evolve.
+
+### 3. Structured Modernization Planning
+
+The planning workflow represents modernization work as phases and individual plan items.
+
+Plan data can include:
+
+- Modernization strategy and target architecture
+- Plan phases and actionable tasks
+- Priority, risk, complexity, and estimated effort
+- Related modernization findings
+- Dependencies between plan items
+- Affected components
+- Reasoning and implementation steps
+
+The structured plan provides a basis for organizing modernization into smaller, reviewable changes.
 
 ### 4. Dependency and Impact Analysis
 
-The dependency-and-impact analysis stage builds on the modernization plan and findings.
+The dependency-and-impact workflow builds on modernization findings and the modernization plan.
 
-It supports structured results covering:
+Its structured results support:
 
-- Dependencies between modernization plan items.
-- Dependency descriptions and their impacts.
-- Affected components and supporting reasons.
-- Impact areas and impact levels.
-- Potential risks and mitigation strategies.
-- Validation of dependency references and impact references.
+- Relationships between modernization plan items
+- Dependency descriptions and their impacts
+- Affected components and supporting reasons
+- Impact areas and impact levels
+- Risks and mitigation strategies
+- Validation of dependency and finding references
 
-The results can be displayed in the application for review.
+The Web Forms application includes a results UI for reviewing the analysis.
 
 ### 5. Pluggable AI Provider Architecture
 
-The AI integration is designed to separate the modernization workflow from the underlying AI provider.
+The AI integration separates modernization workflows from provider-specific implementation details.
 
 The current architecture includes:
 
-- A provider abstraction.
-- An Ollama-based AI provider.
-- A mock provider for fallback and predictable testing.
-- Response parsing and validation.
-- Configurable provider fallback.
+- AI provider abstractions
+- An Ollama-based provider
+- Mock providers for predictable development and testing scenarios
+- Response parsing and validation
+- Configurable provider fallback
 
-This approach makes it possible to change or extend the AI integration without redesigning the entire analysis workflow.
+The documented configuration uses Ollama as the primary provider and a mock provider as the fallback. Fallback behavior is configurable through application settings.
+
+### 6. Automated Testing
+
+The project includes a dedicated MSTest project targeting .NET Framework 4.8.
+
+**Latest verified test result: 99 passed, 0 failed.**
+
+Tests cover request and prompt construction, response parsing and validation, modernization planning, dependency-and-impact analysis, provider factories, orchestration, and fallback behavior.
+
+The unit tests use test doubles where appropriate, so the tested workflows do not require a running AI provider for every test.
+
+See [TESTING.md](TESTING.md) for prerequisites, instructions, coverage details, and testing limitations.
 
 ## Technology Stack
 
 | Area | Technology |
 |---|---|
-| Legacy application | C# and ASP.NET Web Forms |
+| Programming language | C# |
+| Legacy web framework | ASP.NET Web Forms |
 | Runtime | .NET Framework 4.8 |
 | ORM | Entity Framework 6 |
-| Database | Microsoft SQL Server |
+| Database | Microsoft SQL Server / LocalDB |
 | Data modeling | EDMX / Database First |
-| Application architecture | Layered architecture |
-| AI integration | Ollama and mock provider |
-| AI model used locally | Qwen3 4B |
+| Application design | Layered architecture |
+| AI integration | Ollama and mock providers |
+| AI model documented in the project | Qwen3 4B |
+| Automated testing | MSTest |
 | Development environment | Visual Studio |
 | Version control | Git and GitHub |
 
-The legacy application is intentionally retained as the baseline for modernization analysis.
-
 ## Architecture Overview
 
-The AI-assisted modernization workflow separates application-level analysis from provider-specific AI integration.
+The core AI-assisted analysis workflow separates application-level processing from AI provider integration.
 
 ```text
 Legacy2Modern.Web
         |
         v
-Modernization Analysis
+ModernizationAnalysisService
         |
-        v
-Prompt Builder / Request Builder
-        |
-        v
-Modernization AI Service
-        |
-        v
-AI Provider Orchestrator
-        |
-        +-------------------+
-        |                   |
-        v                   v
-      Ollama               Mock
-      Primary             Fallback
+        +-----------------------+
+        |                       |
+        v                       v
+   Prompt Builder         Request Builder
+        |                       |
+        +-----------+-----------+
+                    |
+                    v
+          ModernizationAIService
+                    |
+                    v
+          AIProviderOrchestrator
+                    |
+             +------+------+
+             |             |
+             v             v
+           Ollama         Mock
+           Primary      Fallback
+
+Additional workflows:
+- Modernization planning
+- Dependency and impact analysis
+- Response parsing and validation
+- Results presentation
 ```
 
-The modernization workflow also includes response parsing, validation, and presentation.
+The architecture is designed to keep analysis, request construction, provider execution, validation, and presentation as distinct responsibilities.
 
-The planning and dependency-impact analysis stages extend the workflow beyond initial findings and recommendations.
+The project also documents the legacy application's current architecture and the technical debt that forms the basis for modernization analysis.
 
 ## Repository Structure
 
 ```text
 Legacy2Modern-AI/
-|
 ├── docs/
-│   ├── LEGACY_ARCHITECTURE.md
-│   └── AI_MODERNIZATION_ARCHITECTURE.md
-│
+│   ├── adr/
+│   │   └── ADR-001-incremental-modernization.md
+│   └── architecture/
+│       ├── AI_MODERNIZATION_ARCHITECTURE.md
+│       ├── LEGACY_ARCHITECTURE.md
+│       ├── LEGACY_ASSESSMENT.md
+│       └── system-overview.md
 ├── legacy/
 │   └── Legacy2Modern.Legacy/
+│       ├── Legacy2Modern.Business/
+│       ├── Legacy2Modern.Data/
+│       ├── Legacy2Modern.Web/
 │       └── Legacy2Modern.Legacy.sln
-│
-└── README.md
+├── tests/
+│   └── Legacy2Modern.Business.Tests/
+│       ├── AIProviderFactoryTests.cs
+│       ├── AIProviderOrchestratorTests.cs
+│       ├── ModernizationDependencyImpactAnalysisServiceTests.cs
+│       ├── ModernizationDependencyImpactPromptBuilderTests.cs
+│       ├── ModernizationDependencyImpactRequestBuilderTests.cs
+│       ├── ModernizationDependencyImpactResponseParserTests.cs
+│       ├── ModernizationDependencyImpactResponseValidatorTests.cs
+│       ├── ModernizationPlanningPromptBuilderTests.cs
+│       ├── ModernizationPlanningRequestBuilderTests.cs
+│       ├── ModernizationPlanningResponseParserTests.cs
+│       └── ModernizationPlanningServiceTests.cs
+├── .gitignore
+├── README.md
+└── TESTING.md
 ```
 
-*This is the intended high-level structure; additional files and folders may exist in the repository.*
+This is a simplified view of the repository; it omits individual application files and generated build output.
 
 ## Documentation
 
-Detailed architecture documentation is available here:
-
-- [Legacy Architecture](docs/LEGACY_ARCHITECTURE.md) — describes the legacy application, its technology stack, current architectural design, and identified modernization opportunities.
-- [AI Modernization Architecture](docs/AI_MODERNIZATION_ARCHITECTURE.md) — describes the layered AI integration architecture and its provider workflow.
+- [System Overview](docs/architecture/system-overview.md) — high-level architecture and guiding principles.
+- [Legacy Architecture](docs/architecture/LEGACY_ARCHITECTURE.md) — legacy technology stack, design, workflow rules, and architectural characteristics.
+- [Legacy Assessment](docs/architecture/LEGACY_ASSESSMENT.md) — identified technical debt, risks, and modernization priorities.
+- [AI Modernization Architecture](docs/architecture/AI_MODERNIZATION_ARCHITECTURE.md) — AI workflow, planning models, dependency-impact analysis, validation, and implementation boundaries.
+- [Incremental Modernization ADR](docs/adr/ADR-001-incremental-modernization.md) — architecture decision record.
+- [Testing Guide](TESTING.md) — how to run the automated tests and understand their scope.
 
 ## Current Project Status
 
-The project has progressed through the modernization analysis, planning, and dependency-and-impact analysis stages.
+The project includes an implemented legacy application baseline, AI-assisted modernization analysis, structured modernization planning, dependency-and-impact analysis, response validation, provider orchestration, and results presentation.
 
-Implemented capabilities include structured modernization analysis results, modernization planning, dependency and impact models, response validation, and a results UI.
+The automated unit-test suite has a latest verified result of 99 passed and 0 failed.
 
-Development and validation continue incrementally as the project evolves.
+The project is evolving incrementally. Passing unit tests do not establish that all live AI integrations, end-to-end workflows, deployment scenarios, or performance characteristics have been verified.
 
 ## Future Direction
 
 Potential areas for further development include:
 
-- Expanding validation and automated test coverage.
-- Improving dependency graph analysis.
-- Exploring additional AI providers and models.
-- Extending modernization recommendations and implementation planning.
-- Improving the presentation of analysis results.
+- Improving dependency graph analysis, including additional cycle detection and validation.
+- Expanding automated test coverage.
+- Evaluating additional AI providers and models.
+- Improving modernization recommendations and implementation planning.
+- Enhancing analysis-result presentation.
 - Documenting a complete local setup and demonstration workflow.
+- Exploring modernization toward a more modular, modern application architecture.
 
-These are potential extensions, not claims that the features are already implemented.
+These are potential extensions, not claims that the corresponding features are already implemented.
 
 ## Why This Project?
 
-Legacy modernization is not simply about replacing an older framework with a newer one. Developers must understand existing business rules, identify architectural risks, evaluate dependencies, and plan changes without disrupting existing functionality.
+Legacy modernization requires more than replacing an old framework with a new one. Developers must understand existing business rules, uncover dependencies, evaluate technical risks, and plan changes without disrupting existing functionality.
 
-Legacy2Modern-AI explores how structured analysis and AI assistance can support that process.
+Legacy2Modern-AI explores how structured analysis and AI assistance can support that process while keeping developers responsible for reviewing and approving modernization decisions.
 
-The project demonstrates my practical work with C#, .NET application architecture, legacy systems, AI provider integration, validation, and incremental modernization planning.
+The project demonstrates practical work with C#, legacy .NET applications, layered architecture, AI provider integration, response validation, automated testing, and incremental modernization planning.
